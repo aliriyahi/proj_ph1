@@ -1,4 +1,5 @@
-public class WaildAnimal {
+public class WildAnimal {
+
     public String animalname;
     private int speed;
     public int xposision;

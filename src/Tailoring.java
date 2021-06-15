@@ -7,8 +7,8 @@ public class Tailoring {    // khayati
     boolean x2 = false; // for upgrade
 
     public Tailoring(){
-        if(main.coin >= COST){
-            main.coin -= COST;
+        if(Storage.coin >= COST){
+            Storage.coin -= COST;
             exist = true;
         }
     }
@@ -29,7 +29,7 @@ public class Tailoring {    // khayati
     public boolean pick(int n){
         if(n <= unit){
             unit -= n;
-            Storage.pick("cloths",n);
+            Storage.add("cloths",n);
             return true;
         }
         else
@@ -37,8 +37,8 @@ public class Tailoring {    // khayati
     }
 
     public void upgrade(int mode){
-        if(main.coin >= UPCOST){
-            main.coin -= UPCOST;
+        if(Storage.coin >= UPCOST){
+            Storage.coin -= UPCOST;
             if(mode == 1)
                 unitTime /= 2;
             if(mode == 2)

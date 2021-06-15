@@ -1,5 +1,8 @@
 public class Storage {
     static final int SPACE = 30;
+
+    public static int coin = 0;
+
     public static int egg;
     public static int feather; //par
     public static int milk;
@@ -14,7 +17,7 @@ public class Storage {
     public static int tiger;
     static int useSpace = egg+feather+milk+2*flour+2*fabric+2*packMilk+4*bread+4*cloths+4*icecream+15*lion+15*bear+15*tiger;
 
-    public static boolean pick(String name,int n){  // zakhireh dar anbar
+    public static boolean add(String name,int n){  // zakhireh dar anbar
         if(name.equals("egg")){
             if(n + useSpace <= SPACE){
                 egg += n;
@@ -62,6 +65,59 @@ public class Storage {
         }else if(name.equals("tiger")){
             if(15*n + useSpace <= SPACE){
                 tiger += n;
+                return true; }
+        }
+        return false;
+    }
+
+    public static boolean remove(String name , int n){
+        if(name.equals("egg")){
+            if(egg >= n){
+                egg -= n;
+                return true; }
+        }else if(name.equals("feather")){
+            if(feather >= n){
+                feather -= n;
+                return true; }
+        }else if(name.equals("milk")){
+            if(milk >= n){
+                milk -= n;
+                return true; }
+        }else if(name.equals("flour")){
+            if(flour >= n){
+                flour -= n;
+                return true; }
+        }else if(name.equals("fabric")){
+            if(fabric >= n){
+                fabric -= n;
+                return true; }
+        }else if(name.equals("packMilk")){
+            if(packMilk >= n){
+                packMilk -= n;
+                return true; }
+        }else if(name.equals("bread")){
+            if(bread >= n){
+                bread -= n;
+                return true; }
+        }else if(name.equals("cloths")){
+            if(cloths >= n){
+                cloths -= n;
+                return true; }
+        }else if(name.equals("icecream")){
+            if(icecream >= n){
+                icecream -= n;
+                return true; }
+        }else if(name.equals("lion")){
+            if(lion >= n){
+                lion -= n;
+                return true; }
+        }else if(name.equals("bear")){
+            if(bear >= n){
+                bear -= n;
+                return true; }
+        }else if(name.equals("tiger")){
+            if(tiger >= n){
+                tiger -= n;
                 return true; }
         }
         return false;

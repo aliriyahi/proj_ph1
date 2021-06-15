@@ -8,6 +8,9 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
 
+        Manager m = new Manager(1);
+        m.run();
+
         Scanner sc = new Scanner(System.in);
         Scanner fileReader;
         String username = null , password , menu ,logSign1;
@@ -27,9 +30,11 @@ public class Main {
 
             try {
                 boolean temp = true;
-                fileReader = new Scanner(users);
+
 
                 while (temp) {
+                    fileReader = new Scanner(users);
+
                     System.out.println("Enter USERNAME :");
                     username = sc.next();
                     while (fileReader.hasNextLine()) {
@@ -38,9 +43,13 @@ public class Main {
                             break;
                         }
                     }
+                    fileReader.close();
                 }
+
                 temp = true;
                 while (temp) {
+                    fileReader = new Scanner(users);
+
                     System.out.println("Enter PASSWORD :");
                     password = sc.next();
                     while (fileReader.hasNextLine()) {
@@ -49,10 +58,13 @@ public class Main {
                             break;
                         }
                     }
+                    fileReader.close();
                 }
 
                 temp = true;
                 while (temp) {
+                    fileReader = new Scanner(users);
+
                     while (fileReader.hasNextLine()) {           //     ----------      ----  hasnext az aval miad?
                         String temp1 = fileReader.nextLine();
                         if (temp1.contains(username)) {
@@ -61,8 +73,9 @@ public class Main {
                             break;
                         }
                     }
+                    fileReader.close();
                 }
-                fileReader.close();
+
                 //Manager manager = new Manager(level);
                 //-------------------------------------------------
             }
@@ -75,9 +88,11 @@ public class Main {
         }else if(logSign == 2){
             try {
                 boolean temp = true;
-                fileReader = new Scanner(users);
+
 
                 while (temp) {
+                    fileReader = new Scanner(users);
+
                     System.out.println("Enter USERNAME :");
                     temp = false;
                     username = sc.next();
@@ -88,8 +103,9 @@ public class Main {
                             break;
                         }
                     }
+                    fileReader.close();
                 }
-                fileReader.close();
+
 
                 System.out.println("Enter PASSWORD :");
                 password = sc.next();
