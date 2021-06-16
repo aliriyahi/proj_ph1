@@ -12,55 +12,43 @@ public class Manager {
     String wildanimals;
     int timeprize;
     int prize;
+
+
+
     public Manager(int level){
         this.level = level;
 
     }
-    public void filereader(){
-        try {
-            File missions = new File("missions.txt");
-            Scanner s = new Scanner(missions);
-            while (s.hasNextLine()){
-                String temp = s.nextLine();
-                if (temp.contains("level "+this.level)){
-                    this.startCoin=Integer.parseInt(s.nextLine().split("\\s")[1]);
-                    this.tasks=s.nextLine().substring(6);
-                    this.wildanimals=s.nextLine().substring(8);
-                    this.timeprize=Integer.parseInt(s.nextLine().split("\\s")[1]);
-                    this.prize=Integer.parseInt(s.nextLine().split("\\s")[1]);
-                    break;
 
-                }
-            }
 
-            
-        }catch (Exception e){
-            System.out.println(e);
-        }
 
-    }
 
     public void run(){
+
         ArrayList<DomesticAnimal> domanimals = new ArrayList();
         ArrayList<WildAnimal> wildAnimals = new ArrayList();
         ArrayList<Dog> dogs = new ArrayList();
         ArrayList<Cat> cats = new ArrayList();
         Car car;
-        Mill mill;
-        Bakery bakery;
-        PackMilk packMilk;
-        IceStore iceStore;
-        Tailoring tailoring;
-        ProdFabric prodFabric;
+        Mill mill = new Mill();
+        Bakery bakery = new Bakery();
+        PackMilk packMilk = new PackMilk();
+        IceStore iceStore = new IceStore();
+        Tailoring tailoring = new Tailoring();
+        ProdFabric prodFabric = new ProdFabric();
         Well well=new Well();
         int[][][] homeProduct=new int[6][6][6];
         int[][] grass=new int[6][6];
+        int millTime,bakeryTime,iceStoreTime,tailoringTime,packmilkTime,prodfabricTime;
 
         Scanner sc = new Scanner(System.in);
         String command = null;
 
+
+        //__________________________________________________________________________
         while (!command.contains("EXIT")){
             command=sc.nextLine();
+
             if (command.toUpperCase().startsWith("BUY")){
                 if (command.toLowerCase().contains("cat")){
                     Cat cat = new Cat();
@@ -100,6 +88,7 @@ public class Manager {
                 }
 
             }
+            //-------------------------------------------------------------------------
             else if (command.toUpperCase().startsWith("PICKUP")){
                 int x= Integer.parseInt(command.split("\\s")[1]);
                 int y= Integer.parseInt(command.split("\\s")[2]);
@@ -134,99 +123,136 @@ public class Manager {
                     System.out.println("there is no product here!");
 
             }
+            //---------------------------------------------------------------------------
             else if (command.toUpperCase().startsWith("WELL")){
-                well.water=5;
+                if(well.water == 0)
+                    well.water=5;
+                else
+                    System.out.println("there is still water");
             }
+            //---------------------------------------------------------------------------
             else if (command.toUpperCase().startsWith("PLANT")){
                 int x=Integer.parseInt(command.split("\\s")[1]);
                 int y=Integer.parseInt(command.split("\\s")[2]);
                 grass[y][x]+=1;
             }
+            //---------------------------------------------------------------------------
             else if (command.toUpperCase().startsWith("WORK")){
                 if (command.toLowerCase().contains("mill")){
                     if (Storage.egg==0)
                         System.out.println("there is no egg in the storage!");
+                    else {
+                        millTime = turn + mill.unitTime;
+                    }
 
                 }
                 else if (command.toLowerCase().contains("bakery")){
                     if (Storage.flour==0)
                         System.out.println("there is no flour in the storage!");
+                    else {
+                        bakeryTime = turn + bakery.unitTime;
+                    }
 
                 }
                 else if (command.toLowerCase().contains("packmilk")){
                     if (Storage.milk==0)
                         System.out.println("there is no milk in the storage!");
+                    else {
+                        packmilkTime = turn + packMilk.unitTime;
+                    }
 
                 }
                 else if (command.toLowerCase().contains("prodfabric")){
-                    if (Storage.fabric==0)
-                        System.out.println("there is no fabric in the storage!");
+                    if (Storage.feather==0)
+                        System.out.println("there is no feather in the storage!");
+                    else {
+                        prodfabricTime = turn + prodFabric.unitTime;
+                    }
 
                 }
                 else if (command.toLowerCase().contains("icestore")){
                     if (Storage.packMilk==0)
-                        System.out.println("there ");
+                        System.out.println("there is no packmilk in the storage!");
+                    else {
+                        iceStoreTime = turn + iceStore.unitTime;
+                    }
 
                 }
                 else if (command.toLowerCase().contains("tailoring")){
+                    if (Storage.fabric==0)
+                        System.out.println("there is no fabric in the storage!");
+                    else {
+                        tailoringTime = turn + tailoring.unitTime;
+                    }
 
                 }
 
             }
-            else if (command.toUpperCase().startsWith("CAGE")){
+            //-----------------------------------------------------------------------------
+            else if (command.toUpperCase().startsWith("UPGRADE")){
 
             }
+            //------------------------------------------------------------------------------
             else if (command.toUpperCase().startsWith("BUILD")){
                 if (command.toLowerCase().contains("mill")){
-                    mill = new Mill();
+                    mill.build();
                     if (mill.exist==false)
                         System.out.println("YOU DO NOT HAVE ENOUGH COIN!");
 
                 }
                 else if (command.toLowerCase().contains("bakery")){
-                    bakery = new Bakery();
+                    bakery.build();
                     if (bakery.exist==false)
                         System.out.println("YOU DO NOT HAVE ENOUGH COIN!");
 
                 }
                 else if (command.toLowerCase().contains("packmilk")){
-                    packMilk=new PackMilk();
+                    packMilk.build();
                     if (packMilk.exist==false)
                         System.out.println("YOU DO NOT HAVE ENOUGH COIN!");
 
                 }
                 else if (command.toLowerCase().contains("prodfabric")){
-                    prodFabric=new ProdFabric();
+                    prodFabric.build();
                     if (prodFabric.exist==false)
                         System.out.println("YOU DO NOT HAVE ENOUGH COIN!");
 
                 }
                 else if (command.toLowerCase().contains("icestore")){
-                    iceStore = new IceStore();
+                    iceStore.build();
                     if (iceStore.exist==false)
                         System.out.println("YOU DO NOT HAVE ENOUGH COIN!");
 
                 }
                 else if (command.toLowerCase().contains("tailoring")){
-                    tailoring = new Tailoring();
+                    tailoring.build();
                     if (tailoring.exist==false)
                         System.out.println("YOU DO NOT HAVE ENOUGH COIN!");
 
                 }
 
             }
+            //--------------------------------------------------------------------------------
+            else if (command.toUpperCase().startsWith("CAGE")){
+
+            }
+            //--------------------------------------------------------------------------------
             else if (command.toUpperCase().startsWith("TRUCK LOAD")){
 
             }
+            //--------------------------------------------------------------------------------
             else if (command.toUpperCase().startsWith("TRUCK UNLOAD")){
 
             }
+            //--------------------------------------------------------------------------------
             else if (command.toUpperCase().startsWith("TRUCK GO")){
 
             }
-            else if (command.toUpperCase().startsWith("inquiry")){
+            //--------------------------------------------------------------------------------
+            else if (command.toLowerCase().startsWith("inquiry")){
 
             }
+            //--------------------------------------------------------------------------------
             else if (command.toUpperCase().startsWith("TURN")){
 
             }
@@ -242,6 +268,32 @@ public class Manager {
 //        domesticAnimal[0].animalName = "d";
 //        domesticAnimal[1].animalName = "k";
 //        System.out.println(domesticAnimal[0].animalName);
+
+    }
+
+
+
+    public void filereader(){
+        try {
+            File missions = new File("missions.txt");
+            Scanner s = new Scanner(missions);
+            while (s.hasNextLine()){
+                String temp = s.nextLine();
+                if (temp.contains("level "+this.level)){
+                    this.startCoin=Integer.parseInt(s.nextLine().split("\\s")[1]);
+                    this.tasks=s.nextLine().substring(6);
+                    this.wildanimals=s.nextLine().substring(8);
+                    this.timeprize=Integer.parseInt(s.nextLine().split("\\s")[1]);
+                    this.prize=Integer.parseInt(s.nextLine().split("\\s")[1]);
+                    break;
+
+                }
+            }
+
+
+        }catch (Exception e){
+            System.out.println(e);
+        }
 
     }
 

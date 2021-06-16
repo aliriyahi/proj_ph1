@@ -7,6 +7,10 @@ public class Bakery {
     boolean x2 = false; // for upgrade
 
     public Bakery(){
+
+    }
+
+    public void build(){
         if(Storage.coin >= COST){
             Storage.coin -= COST;
             exist = true;

@@ -7,6 +7,10 @@ public class Mill {   // asiab
     boolean x2 = false; // for upgrade
 
     public Mill(){
+
+    }
+
+    public void build(){
         if(Storage.coin >= COST){
             Storage.coin -= COST;
             exist = true;

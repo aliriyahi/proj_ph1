@@ -7,6 +7,10 @@ public class PackMilk {
     boolean x2 = false; // for upgrade
 
     public PackMilk(){
+
+    }
+
+    public void build(){
         if(Storage.coin >= COST){
             Storage.coin -= COST;
             exist = true;

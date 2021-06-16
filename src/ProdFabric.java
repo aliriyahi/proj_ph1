@@ -7,6 +7,10 @@ public class ProdFabric {
     boolean x2 = false; // for upgrade
 
     public ProdFabric(){
+
+    }
+
+    public void build(){
         if(Storage.coin >= COST){
             Storage.coin -= COST;
             exist = true;
