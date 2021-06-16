@@ -1,10 +1,10 @@
 public class Dog {
     public String name;
-    private int price;
-    public int xposision;
-    public int yposision;
-    private int speed;
-    private void animalmove(){
+    public int price=100;
+    public int xposision=(int)Math.random()%6+1;
+    public int yposision=(int)Math.random()%6+1;
+    public int speed=1;
+    public void animalmove(){
         int random= (int) (Math.random()%2);
         if (random==0)
             random=1;

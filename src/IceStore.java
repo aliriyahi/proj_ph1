@@ -3,7 +3,7 @@ public class IceStore {
     private final int UPCOST = 400;
     public int unit = 0;
     int unitTime = 7;
-    public static boolean exist = false;
+    public  boolean exist = false;
     boolean x2 = false; // for upgrade
 
     public IceStore(){

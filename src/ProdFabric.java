@@ -3,7 +3,7 @@ public class ProdFabric {
     private final int UPCOST = 200;
     public int unit = 0;
     int unitTime = 5;
-    public static boolean exist = false;
+    public  boolean exist = false;
     boolean x2 = false; // for upgrade
 
     public ProdFabric(){

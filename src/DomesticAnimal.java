@@ -2,12 +2,12 @@
     public class DomesticAnimal {
         public String animalName;
         public int animalPrice;
-        public int animalHealth;
+        public int animalHealth=100;
         public int timeToProduce;
         public String product;
-        public int speed;
-        public int xposision;
-        public int yposision;
+        public int speed=1;
+        public int xposision=(int)Math.random()%6+1;
+        public int yposision=(int)Math.random()%6+1;
 
         public void animalmove(){
             int random= (int) (Math.random()%2);

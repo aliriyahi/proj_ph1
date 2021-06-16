@@ -3,7 +3,7 @@ public class Mill {   // asiab
     private final int UPCOST = 100;
     public int unit = 0;
     int unitTime = 4;
-    public static boolean exist = false;
+    public  boolean exist = false;
     boolean x2 = false; // for upgrade
 
     public Mill(){
