@@ -2,10 +2,12 @@ public class WildAnimal {
 
     public String animalname;
     private int speed;
-    public int xposision;
-    public int yposision;
+    public int xposision = (int)Math.random()%6+1;
+    public int yposision = (int)Math.random()%6+1;
     public int cages;
-    private void animalmove(){
+    public int maxCage;
+
+    public void animalmove(){
         int random= (int) (Math.random()%2);
         if (random==0)
             random=1;

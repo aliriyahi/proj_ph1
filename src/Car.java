@@ -3,7 +3,7 @@ import com.sun.tools.javac.Main;
 public class Car {
     private final int SPACE = 15;
     int useSpace = 0;
-    private final int time=10;
+    public final int time=10;
     int price = 0;
 
     public boolean load(String name , int n){

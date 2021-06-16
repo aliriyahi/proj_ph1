@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Locale;
@@ -29,7 +30,8 @@ public class Manager {
         ArrayList<WildAnimal> wildAnimals = new ArrayList();
         ArrayList<Dog> dogs = new ArrayList();
         ArrayList<Cat> cats = new ArrayList();
-        Car car;
+        Printinformation printinformation = new Printinformation();
+        Car car = new Car();
         Mill mill = new Mill();
         Bakery bakery = new Bakery();
         PackMilk packMilk = new PackMilk();
@@ -39,7 +41,8 @@ public class Manager {
         Well well=new Well();
         int[][][] homeProduct=new int[6][6][6];
         int[][] grass=new int[6][6];
-        int millTime,bakeryTime,iceStoreTime,tailoringTime,packmilkTime,prodfabricTime;
+        int millTime=0,bakeryTime=0,iceStoreTime=0,tailoringTime=0,packmilkTime=0,prodfabricTime=0;
+        int truckTime = 0;
 
         Scanner sc = new Scanner(System.in);
         String command = null;
@@ -142,7 +145,11 @@ public class Manager {
                     if (Storage.egg==0)
                         System.out.println("there is no egg in the storage!");
                     else {
-                        millTime = turn + mill.unitTime;
+                        if(millTime == 0)
+                            millTime = turn + mill.unitTime;
+                        else
+                            System.out.println("Still working...");
+
                     }
 
                 }
@@ -150,7 +157,10 @@ public class Manager {
                     if (Storage.flour==0)
                         System.out.println("there is no flour in the storage!");
                     else {
-                        bakeryTime = turn + bakery.unitTime;
+                        if(bakeryTime == 0)
+                            bakeryTime = turn + bakery.unitTime;
+                        else
+                            System.out.println("Still working...");
                     }
 
                 }
@@ -158,7 +168,10 @@ public class Manager {
                     if (Storage.milk==0)
                         System.out.println("there is no milk in the storage!");
                     else {
-                        packmilkTime = turn + packMilk.unitTime;
+                        if(packmilkTime == 0)
+                            packmilkTime = turn + packMilk.unitTime;
+                        else
+                            System.out.println("Still working...");
                     }
 
                 }
@@ -166,7 +179,10 @@ public class Manager {
                     if (Storage.feather==0)
                         System.out.println("there is no feather in the storage!");
                     else {
-                        prodfabricTime = turn + prodFabric.unitTime;
+                        if(prodfabricTime == 0)
+                            prodfabricTime = turn + prodFabric.unitTime;
+                        else
+                            System.out.println("Still working...");
                     }
 
                 }
@@ -174,7 +190,10 @@ public class Manager {
                     if (Storage.packMilk==0)
                         System.out.println("there is no packmilk in the storage!");
                     else {
-                        iceStoreTime = turn + iceStore.unitTime;
+                        if(iceStoreTime == 0)
+                            iceStoreTime = turn + iceStore.unitTime;
+                        else
+                            System.out.println("Still working...");
                     }
 
                 }
@@ -182,7 +201,10 @@ public class Manager {
                     if (Storage.fabric==0)
                         System.out.println("there is no fabric in the storage!");
                     else {
-                        tailoringTime = turn + tailoring.unitTime;
+                        if(tailoringTime == 0)
+                            tailoringTime = turn + tailoring.unitTime;
+                        else
+                            System.out.println("Still working...");
                     }
 
                 }
@@ -190,6 +212,24 @@ public class Manager {
             }
             //-----------------------------------------------------------------------------
             else if (command.toUpperCase().startsWith("UPGRADE")){
+                if (command.toLowerCase().contains("mill")){
+                    mill.upgrade(Integer.parseInt(command.split("//s")[2]));
+                }
+                else if (command.toLowerCase().contains("bakery")){
+                    bakery.upgrade(Integer.parseInt(command.split("//s")[2]));
+                }
+                else if (command.toLowerCase().contains("packmilk")){
+                    packMilk.upgrade(Integer.parseInt(command.split("//s")[2]));
+                }
+                else if (command.toLowerCase().contains("prodfabric")){
+                    prodFabric.upgrade(Integer.parseInt(command.split("//s")[2]));
+                }
+                else if (command.toLowerCase().contains("icestore")){
+                    iceStore.upgrade(Integer.parseInt(command.split("//s")[2]));
+                }
+                else if (command.toLowerCase().contains("tailoring")){
+                    tailoring.upgrade(Integer.parseInt(command.split("//s")[2]));
+                }
 
             }
             //------------------------------------------------------------------------------
@@ -234,22 +274,55 @@ public class Manager {
             }
             //--------------------------------------------------------------------------------
             else if (command.toUpperCase().startsWith("CAGE")){
+                int x = Integer.parseInt(command.split("//s")[1]);
+                int y = Integer.parseInt(command.split("//s")[2]);
+                boolean temp = true;
+                for (int i = 0; i < wildAnimals.size(); i++) {
+                    if(wildAnimals.get(i).xposision == x && wildAnimals.get(i).yposision == y){
+                        temp = false;
+                        wildAnimals.get(i).cages +=1;
+                        break;
+                    }
+                }
+                if(temp == true)
+                    System.out.println("There is no wild animal there!");
 
             }
             //--------------------------------------------------------------------------------
             else if (command.toUpperCase().startsWith("TRUCK LOAD")){
+                String name = command.toLowerCase().split("//s")[2];
+                boolean temp = car.load(name , 1);
+                if(temp == false)
+                    System.out.println("Car does not have space!");
 
             }
             //--------------------------------------------------------------------------------
             else if (command.toUpperCase().startsWith("TRUCK UNLOAD")){
+                String name = command.toLowerCase().split("//s")[2];
+                boolean temp = car.unload(name , 1);
+                if(temp == false)
+                    System.out.println("Car does not have such staff!");
 
             }
             //--------------------------------------------------------------------------------
             else if (command.toUpperCase().startsWith("TRUCK GO")){
+                if(truckTime == 0)
+                    truckTime = turn + car.time;
+                else
+                    System.out.println("Car is on the road...");
 
             }
             //--------------------------------------------------------------------------------
             else if (command.toLowerCase().startsWith("inquiry")){
+                printinformation.turns(turn);
+                printinformation.grass(grass);
+                printinformation.domAnimal(domanimals);
+                printinformation.wildAnimal(wildAnimals);
+                printinformation.cat(cats);
+                printinformation.dog(dogs);
+                printinformation.homeProduct(homeProduct);
+                printinformation.task(level,);
+
 
             }
             //--------------------------------------------------------------------------------
