@@ -33,8 +33,11 @@ public class Bakery {
     public boolean pick(int n){
         if(n <= unit){
             unit -= n;
-            Storage.add("bread",n);
-            return true;
+            boolean b = Storage.add("bread",n);
+            if(b)
+                return true;
+            else
+                return false;
         }
         else
             return false;

@@ -19,6 +19,7 @@ public class Main {
         int startLevel;
 
 
+
         System.out.println("1 - LOG IN\n2 - SIGN UP");
         logSign1 = sc.next();
         if(logSign1.equals("EXIT"))

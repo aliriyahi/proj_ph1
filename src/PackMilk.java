@@ -33,8 +33,11 @@ public class PackMilk {
     public boolean pick(int n){
         if(n <= unit){
             unit -= n;
-            Storage.add("packMilk",n);
-            return true;
+            boolean b = Storage.add("packMilk",n);
+            if(b)
+                return true;
+            else
+                return false;
         }
         else
             return false;

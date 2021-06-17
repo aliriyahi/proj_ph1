@@ -33,8 +33,11 @@ public class Tailoring {    // khayati
     public boolean pick(int n){
         if(n <= unit){
             unit -= n;
-            Storage.add("cloths",n);
-            return true;
+            boolean b = Storage.add("cloths",n);
+            if(b)
+                return true;
+            else
+                return false;
         }
         else
             return false;

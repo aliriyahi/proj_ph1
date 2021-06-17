@@ -1,6 +1,6 @@
 public class Well {
-    public int water;
-    public int time=3;
+    public int water = 0;
+    public int time = 3;
 
 
 }

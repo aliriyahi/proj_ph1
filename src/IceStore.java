@@ -32,8 +32,11 @@ public class IceStore {
     public boolean pick(int n){
         if(n <= unit){
             unit -= n;
-            Storage.add("icecream",n);
-            return true;
+            boolean b = Storage.add("icecream",n);
+            if(b)
+                return true;
+            else
+                return false;
         }
         else
             return false;
