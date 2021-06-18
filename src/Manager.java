@@ -1,9 +1,8 @@
 import javax.swing.*;
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Locale;
-import java.util.Scanner;
-import java.util.SortedMap;
+import java.io.FileWriter;
+import java.io.PrintWriter;
+import java.util.*;
 
 public class Manager {
     int turn = 0;
@@ -14,6 +13,8 @@ public class Manager {
     int timeprize;
     int prize;
     String[] wildTn ;
+    String username , password;
+    int previousCoin;
 
 
 
@@ -45,7 +46,7 @@ public class Manager {
         int millTime=0,bakeryTime=0,iceStoreTime=0,tailoringTime=0,packmilkTime=0,prodfabricTime=0;
         int truckTime = 0;
         int chickenTime=0,turkeyTime=0,buffaloTime=0;
-
+        boolean Return = false;
 
         Scanner sc = new Scanner(System.in);
         String command = "a";
@@ -728,7 +729,136 @@ public class Manager {
 
                     }
                     //-------------------------------------------------------------------- final check
-                    if (Storage.coin==)
+                    int chicken =0,turkey=0,buffalo=0;
+                    for (int j = 0; j < domanimals.size(); j++) {
+                        if(domanimals.get(j).animalName.equals("chicken")){
+                            chicken ++;
+                        }else if(domanimals.get(j).animalName.equals("turkey")){
+                            turkey ++;
+                        } else if(domanimals.get(j).animalName.equals("buffalo")){
+                            buffalo ++;
+                        }
+                    }
+                    boolean[] b = new boolean[13];
+                    for (int j = 0; j < b.length; j++) {
+                        b[j] = false;
+                    }
+                    String[] task1 = tasks.split("\\s");
+                    for (int j = 0; j < task1.length; j++) {
+                        if(task1[j].equals("egg")){
+                            if(Integer.parseInt(task1[j-1]) <= Storage.totalegg)
+                                b[0] = true;
+                        }
+                        else if(task1[j].equals("feather")){
+                            if(Integer.parseInt(task1[j-1]) <= Storage.totalfeather)
+                                b[1] = true;
+                        }
+                        else if(task1[j].equals("milk")){
+                            if(Integer.parseInt(task1[j-1]) <= Storage.totalmilk)
+                                b[2] = true;
+                        }
+                        else if(task1[j].equals("flour")){
+                            if(Integer.parseInt(task1[j-1]) <= Storage.totalflour)
+                                b[3] = true;
+                        }
+                        else if(task1[j].equals("fabric")){
+                            if(Integer.parseInt(task1[j-1]) <= Storage.totalfabric)
+                                b[4] = true;
+                        }
+                        else if(task1[j].equals("packmilk")){
+                            if(Integer.parseInt(task1[j-1]) <= Storage.totalpackmilk)
+                                b[5] = true;
+                        }
+                        else if(task1[j].equals("bread")){
+                            if(Integer.parseInt(task1[j-1]) <= Storage.totalbread)
+                                b[6] = true;
+                        }
+                        else if(task1[j].equals("cloths")){
+                            if(Integer.parseInt(task1[j-1]) <= Storage.totalcloths)
+                                b[7] = true;
+                        }
+                        else if(task1[j].equals("icecream")){
+                            if(Integer.parseInt(task1[j-1]) <= Storage.totalicecream)
+                                b[8] = true;
+                        }
+                        else if(task1[j].equals("coin")){
+                            if(Integer.parseInt(task1[j-1]) <= Storage.coin)
+                                b[9] = true;
+                        }
+                        else if(task1[j].equals("chicken")){
+                            if(Integer.parseInt(task1[j-1]) <= chicken)
+                                b[10] = true;
+                        }
+                        else if(task1[j].equals("turkey")){
+                            if(Integer.parseInt(task1[j-1]) <= turkey)
+                                b[11] = true;
+                        }
+                        else if(task1[j].equals("buffalo")){
+                            if(Integer.parseInt(task1[j-1]) <= buffalo)
+                                b[12] = true;
+                        }
+                    }
+
+                    int temp = 0;
+                    for (int j = 0; j < b.length; j++) {
+                        if(b[j] == true)
+                            temp ++;
+                    }
+                    if(temp == b.length){
+                        level++;
+                        System.out.println("CONGRATS you have finished this level  :)");
+                        try {
+                            File users = new File("users.txt");
+                            File users1 = new File("users1.txt");
+                            Scanner user = new Scanner(users);
+                            Scanner user1 = new Scanner((users1));
+                            PrintWriter printWriter = new PrintWriter(users1);
+
+                            while (user.hasNextLine()){
+                                String line = user.nextLine();
+                                if (turn <= timeprize) {
+                                    if(line.startsWith(username)) {
+                                        printWriter.append(username + " " + password + " " + level +" "+prize);
+                                        printWriter.println();
+                                    }else {
+                                        printWriter.append(line);
+                                        printWriter.println();
+                                    }
+
+                                }
+                                else{
+                                    if(line.startsWith(username)) {
+                                        printWriter.append(username + " " + password + " " + level +" 0");
+                                        printWriter.println();
+                                    }else {
+                                        printWriter.append(line);
+                                        printWriter.println();
+                                    }
+
+                                }
+                            }
+                            printWriter.close();
+                            user.close();
+                            PrintWriter printWriter1 = new PrintWriter(users);
+                            while (user1.hasNextLine()){
+                                printWriter1.append(user1.nextLine());
+                                printWriter1.println();
+                            }
+                            printWriter1.close();
+                            user1.close();
+
+                        }
+                        catch (Exception e){
+                            System.out.println(e);
+                        }
+                        System.out.println("1 : MENU  ,  2 : EXIT");
+                        int m = sc.nextInt();
+                        if(m == 2)
+                            System.exit(0);
+                        else if(m == 1){
+                            Return = true;
+                        }
+                    }
 
 
 
@@ -749,6 +879,8 @@ public class Manager {
                 printinformation.dog(dogs);
                 printinformation.homeProduct(homeProduct);
                 printinformation.task(level,domanimals);
+                if(Return == true)
+                    break;
             }
 
         }
@@ -775,7 +907,7 @@ public class Manager {
                 String temp = s.nextLine();
                 if (temp.contains("level "+this.level)){
                     this.startCoin=Integer.parseInt(s.nextLine().split("\\s")[1]);
-                    Storage.coin = startCoin;
+                    Storage.coin = startCoin + previousCoin;
                     this.tasks=s.nextLine().substring(6);
                     this.wildanimals=s.nextLine().substring(8);
                     this.wildTn = wildanimals.split("\\s");
