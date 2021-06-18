@@ -1,35 +1,72 @@
 public class Cat {
     public String name;
     public int price=150;
-    public int xposision=(int)Math.random()%6+1;
-    public int yposision=(int)Math.random()%6+1;;
+    public int xposision=(int)Math.random()%6;
+    public int yposision=(int)Math.random()%6;
     public int speed=1;
-    public void animalmove(){
-
-        int random= (int) (Math.random()%2);
-        if (random==0)
-            random=1;
-        else if (random==1)
-            random=-1;
-        int move=random*this.speed;
-
-        if (this.xposision+move<=6 && this.xposision+move>=1){
-            this.xposision+=move;
-
+    public void animalmove(int[][][] homeproduct){
+        double temp = 50;
+        int x=0;
+        int y=0;
+        boolean b=false;
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 6; j++) {
+                for (int k = 0; k < 12; k++) {
+                    if (homeproduct[i][j][k]!=0){
+                        b=true;
+                        if (Math.sqrt((j-this.xposision)*(j-this.xposision)+(i-this.yposision)*(i-this.yposision))<temp){
+                            temp=Math.sqrt((j-this.xposision)*(j-this.xposision)+(i-this.yposision)*(i-this.yposision));
+                            x=j;
+                            y=i;
+                        }
+                    }
+                }
+            }
         }
-        else if (this.yposision+move<=6 && this.yposision+move>=1){
-            this.yposision+=random;
+        if (b){
+            if (xposision>x)
+                xposision-=speed;
+            else if (xposision<x)
+                xposision+=speed;
+            else if (xposision==x){
+                if (yposision>y)
+                    yposision-=speed;
+                else if (yposision<y)
+                    yposision+=speed;
+            }
         }
         else {
-            move*=-1;
-            if (this.xposision+move<=6 && this.xposision+move>=1){
+            int random= (int) (Math.random()%2);
+            if (random==0)
+                random=1;
+            else if (random==1)
+                random=-1;
+            int move=random*this.speed;
+            int random1=(int)Math.random()%2;
+
+            if (random1==0){
+                if (this.xposision+move<=5 && this.xposision+move>=0){
+                    this.xposision+=move;
+                }
+                move*=-1;
                 this.xposision+=move;
 
             }
-            else if (this.yposision+move<=6 && this.yposision+move>=1){
-                this.yposision+=random;
+
+            else if (random1==1){
+                if (this.yposision+move<=5 && this.yposision+move>=0){
+                    this.yposision+=move;
+                }
+                move*=-1;
+                this.yposision+=move;
+
             }
         }
+
     }
+    //public int[][] nearestprod(int[][][] homeproduct ){
+
+    //}
+
 
 }

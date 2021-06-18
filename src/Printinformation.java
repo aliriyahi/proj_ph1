@@ -31,7 +31,7 @@ public class Printinformation {
     }
     public void wildAnimal(ArrayList<WildAnimal> animals){
         for (int i = 0; i < animals.size(); i++) {
-            System.out.println(animals.get(i).animalname + " " + animals.get(i).cages + "["+animals.get(i).xposision +" "+ animals.get(i).yposision+ "]");
+            System.out.println(animals.get(i).animalname + " " + animals.get(i).cages +"/"+animals.get(i).maxCage + " ["+animals.get(i).xposision +" "+ animals.get(i).yposision+ "]");
         }
     }
     public void dog(ArrayList<Dog> animals){

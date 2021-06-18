@@ -125,8 +125,8 @@ public class Manager {
             }
             //-------------------------------------------------------------------------
             else if (command.toUpperCase().startsWith("PICKUP")){
-                int x= Integer.parseInt(command.split("\\s")[1]);
-                int y= Integer.parseInt(command.split("\\s")[2]);
+                int x= Integer.parseInt(command.split("\\s")[1])-1;
+                int y= Integer.parseInt(command.split("\\s")[2])-1;
                 boolean error=true;
                 for (int i = 0; i < 12; i++) {
                     if (homeProduct[y][x][i]>0){
@@ -154,6 +154,7 @@ public class Manager {
                                 System.out.println("Storage have not enough space!");
                         }
                         else if (temp==4){
+
                             boolean b = Storage.add("loin",1);
                             if(b)
                                 homeProduct[y][x][i] = 0;
@@ -232,8 +233,8 @@ public class Manager {
             }
             //---------------------------------------------------------------------------
             else if (command.toUpperCase().startsWith("PLANT")){
-                int x=Integer.parseInt(command.split("\\s")[1]);
-                int y=Integer.parseInt(command.split("\\s")[2]);
+                int x=Integer.parseInt(command.split("\\s")[1])-1;
+                int y=Integer.parseInt(command.split("\\s")[2])-1;
                 if(well.water > 0) {
                     grass[y][x] += 1;
                     well.water -= 1;
@@ -376,8 +377,8 @@ public class Manager {
             }
             //--------------------------------------------------------------------------------
             else if (command.toUpperCase().startsWith("CAGE")){
-                int x = Integer.parseInt(command.split("\\s")[1]);
-                int y = Integer.parseInt(command.split("\\s")[2]);
+                int x = Integer.parseInt(command.split("\\s")[1])-1;
+                int y = Integer.parseInt(command.split("\\s")[2])-1;
                 boolean temp = true;
                 for (int i = 0; i < wildAnimals.size(); i++) {
                     if(wildAnimals.get(i).xposision == x && wildAnimals.get(i).yposision == y){
@@ -392,18 +393,25 @@ public class Manager {
             }
             //--------------------------------------------------------------------------------
             else if (command.toUpperCase().startsWith("TRUCK LOAD")){
+
                 String name = command.toLowerCase().split("\\s")[2];
-                boolean temp = car.load(name , 1);
-                if(temp == false)
-                    System.out.println("Car does not have space!");
+                if (truckTime==0){
+                    boolean temp = car.load(name , 1);
+                    if(temp == false)
+                        System.out.println("Car does not have space!");
+                }
+
 
             }
             //--------------------------------------------------------------------------------
             else if (command.toUpperCase().startsWith("TRUCK UNLOAD")){
                 String name = command.toLowerCase().split("\\s")[2];
-                boolean temp = car.unload(name , 1);
-                if(temp == false)
-                    System.out.println("Car does not have such staff!");
+                if (truckTime==0){
+                    boolean temp = car.unload(name , 1);
+                    if(temp == false)
+                        System.out.println("Car does not have such staff!");
+                }
+
 
             }
             //--------------------------------------------------------------------------------
@@ -434,40 +442,39 @@ public class Manager {
                 for (int i = 0; i < n; i++) {
                     turn ++;
                     //--------------------------------------------------------- handling movement
-                    for (int j = 0; j < wildAnimals.size(); j++) {
-                        wildAnimals.get(i).animalmove();
-                    }
+
                     for (int j = 0; j < wildAnimals.size(); j++) {
                         wildAnimals.get(i).animalmove();
                     }
                     for (int j = 0; j < cats.size(); j++) {
-                        cats.get(i).animalmove();
+                        cats.get(i).animalmove(homeProduct);
                     }
                     for (int j = 0; j < dogs.size(); j++) {
                         dogs.get(i).animalmove();
                     }
+
                     //-------------------------------------------------------- handling products
 
                     for (int j = 0; j < domanimals.size(); j++) {
                         if(turn >= domanimals.get(i).turnTime){
                             if(domanimals.get(i).animalName.equals("chicken")){
                                 domanimals.get(i).turnTime += domanimals.get(i).timeToProduce;
-                                if(homeProduct[domanimals.get(i).xposision][domanimals.get(i).yposision][0] == 0)
-                                    homeProduct[domanimals.get(i).xposision][domanimals.get(i).yposision][0] = 11;
+                                if(homeProduct[domanimals.get(i).yposision][domanimals.get(i).xposision][0] == 0)
+                                    homeProduct[domanimals.get(i).yposision][domanimals.get(i).xposision][0] = 11;
                                 else
-                                    homeProduct[domanimals.get(i).xposision][domanimals.get(i).yposision][0] += 1;
+                                    homeProduct[domanimals.get(i).yposision][domanimals.get(i).xposision][0] += 1;
                             }else if(domanimals.get(i).animalName.equals("turkey")){
                                 domanimals.get(i).turnTime += domanimals.get(i).timeToProduce;
-                                if(homeProduct[domanimals.get(i).xposision][domanimals.get(i).yposision][0] == 0)
-                                    homeProduct[domanimals.get(i).xposision][domanimals.get(i).yposision][0] = 21;
+                                if(homeProduct[domanimals.get(i).yposision][domanimals.get(i).xposision][0] == 0)
+                                    homeProduct[domanimals.get(i).yposision][domanimals.get(i).xposision][0] = 21;
                                 else
-                                    homeProduct[domanimals.get(i).xposision][domanimals.get(i).yposision][0] += 1;
+                                    homeProduct[domanimals.get(i).yposision][domanimals.get(i).xposision][0] += 1;
                             }else if(domanimals.get(i).animalName.equals("buffalo")){
                                 domanimals.get(i).turnTime += domanimals.get(i).timeToProduce;
-                                if(homeProduct[domanimals.get(i).xposision][domanimals.get(i).yposision][0] == 0)
-                                    homeProduct[domanimals.get(i).xposision][domanimals.get(i).yposision][0] = 31;
+                                if(homeProduct[domanimals.get(i).yposision][domanimals.get(i).xposision][0] == 0)
+                                    homeProduct[domanimals.get(i).yposision][domanimals.get(i).xposision][0] = 31;
                                 else
-                                    homeProduct[domanimals.get(i).xposision][domanimals.get(i).yposision][0] += 1;
+                                    homeProduct[domanimals.get(i).yposision][domanimals.get(i).xposision][0] += 1;
                             }
                         }
                     }
@@ -498,12 +505,236 @@ public class Manager {
                             }
                         }
                     }
-                    //-----------------------------------------------------------------------------------
+                    //--------------------------------------------------------------------------handling second products
+                    if (turn>= millTime && millTime!=0){
+                        mill.run();
+                        if (homeProduct[(int)Math.random()%6][(int)Math.random()%6][6]==0)
+                            homeProduct[(int)Math.random()%6][(int)Math.random()%6][6]=41;
+                        else
+                            homeProduct[(int)Math.random()%6][(int)Math.random()%6][6]++;
+                        millTime=0;
+
+                    }
+                    if (turn>= prodfabricTime&& prodfabricTime!=0){
+                        prodFabric.run();
+                        if (homeProduct[(int)Math.random()%6][(int)Math.random()%6][7]==0)
+                            homeProduct[(int)Math.random()%6][(int)Math.random()%6][7]=51;
+                        else
+                            homeProduct[(int)Math.random()%6][(int)Math.random()%6][7]++;
+                        prodfabricTime=0;
+
+                    }
+                    if (turn>=packmilkTime  && packmilkTime!=0){
+                        packMilk.run();
+                        if (homeProduct[(int)Math.random()%6][(int)Math.random()%6][8]==0)
+                            homeProduct[(int)Math.random()%6][(int)Math.random()%6][8]=61;
+                        else
+                            homeProduct[(int)Math.random()%6][(int)Math.random()%6][8]++;
+                        packmilkTime=0;
+
+                    }
+                    if (turn>= bakeryTime && bakeryTime!=0){
+                        bakery.run();
+                        if (homeProduct[(int)Math.random()%6][(int)Math.random()%6][9]==0)
+                            homeProduct[(int)Math.random()%6][(int)Math.random()%6][9]=71;
+                        else
+                            homeProduct[(int)Math.random()%6][(int)Math.random()%6][9]++;
+                        bakeryTime=0;
+
+                    }
+                    if (turn>= tailoringTime && tailoringTime!=0){
+                        tailoring.run();
+                        if (homeProduct[(int)Math.random()%6][(int)Math.random()%6][10]==0)
+                            homeProduct[(int)Math.random()%6][(int)Math.random()%6][10]=81;
+                        else
+                            homeProduct[(int)Math.random()%6][(int)Math.random()%6][10]++;
+                        tailoringTime=0;
+
+                    }
+                    if (turn>= iceStoreTime && iceStoreTime!=0){
+                        iceStore.run();
+                        if (homeProduct[(int)Math.random()%6][(int)Math.random()%6][11]==0)
+                            homeProduct[(int)Math.random()%6][(int)Math.random()%6][11]=91;
+                        else
+                            homeProduct[(int)Math.random()%6][(int)Math.random()%6][11]++;
+                        iceStoreTime=0;
+
+                    }
+                    //------------------------------------------------------------- grass check
+                    int grasscheck=0;
+                    for (int j = 0; j < 6; j++) {
+                        for (int k = 0; k < 6; k++) {
+                            if (grass[i][j]!=0)
+                                grasscheck=1;
+                        }
+
+                    }
+                    if (grasscheck==0)
+                        System.out.println("there is no grass !");
+                    //--------------------------------------------------------------- cage check
+                    for (int j = 0; j < 6; j++) {
+                        if (wildAnimals.get(j).cages>=wildAnimals.get(j).maxCage){
+                            if (wildAnimals.get(j).animalname.equals("loin")){
+                                homeProduct[wildAnimals.get(j).yposision][wildAnimals.get(j).xposision][3]=4;
+                            }
+                            else if (wildAnimals.get(j).animalname.equals("bear")){
+                                homeProduct[wildAnimals.get(j).yposision][wildAnimals.get(j).xposision][4]=5;
+                            }
+                            else if (wildAnimals.get(j).animalname.equals("tiger")){
+                                homeProduct[wildAnimals.get(j).yposision][wildAnimals.get(j).xposision][5]=6;
+                            }
+
+                        }
+                    }
+                    //-----------------------------------------------handling truck
+                    if (turn>=truckTime && truckTime!=0){
+                        car.sell();
+                        truckTime=0;
+                    }
+                    //---------------------------------------------------- health reduce
+                    for (int j = 0; j < domanimals.size(); j++) {
+                        domanimals.get(j).animalHealth-=10;
+                    }
+                    //---------------------------------------------------------------- animal move(food need)
+                    for (int j = 0; j < domanimals.size(); j++) {
+                        if(domanimals.get(j).animalHealth<=50){
+                            domanimals.get(j).animalmove(domanimals.get(j).foodneed(grass)[0][0] , domanimals.get(j).foodneed(grass)[1][0]);
+
+                        }
+                        else if (domanimals.get(j).animalHealth>50)
+                            domanimals.get(j).animalmove();
+
+                    }
+                    //------------------------------------------------------ eating grass
+                    for (int j = 0; j <domanimals.size(); j++) {
+                        if (domanimals.get(j).animalHealth==10){
+                            if (grass[domanimals.get(j).yposision][domanimals.get(j).xposision]!=0){
+                                domanimals.get(j).animalHealth=100;
+                                grass[domanimals.get(j).yposision][domanimals.get(j).xposision]-=1;
+                            }
+                        }
+                        else if (domanimals.get(j).animalHealth==20){
+                            if (grass[domanimals.get(j).yposision][domanimals.get(j).xposision]!=0){
+                                domanimals.get(j).animalHealth=100;
+                                grass[domanimals.get(j).yposision][domanimals.get(j).xposision]-=1;
+                            }
+                        }
+                        else if (domanimals.get(j).animalHealth==30){
+                            if (grass[domanimals.get(j).yposision][domanimals.get(j).xposision]!=0){
+                                domanimals.get(j).animalHealth=100;
+                                grass[domanimals.get(j).yposision][domanimals.get(j).xposision]-=1;
+                            }
+                        }
+                        else if (domanimals.get(j).animalHealth==40){
+                            if (grass[domanimals.get(j).yposision][domanimals.get(j).xposision]!=0){
+                                domanimals.get(j).animalHealth=100;
+                                grass[domanimals.get(j).yposision][domanimals.get(j).xposision]-=1;
+                            }
+                        }
+                        else if (domanimals.get(j).animalHealth==50){
+                            if (grass[domanimals.get(j).yposision][domanimals.get(j).xposision]!=0){
+                                domanimals.get(j).animalHealth=100;
+                                grass[domanimals.get(j).yposision][domanimals.get(j).xposision]-=1;
+                            }
+                        }
+
+                    }
+                    //---------------------------------------------------------------- dog wild killer
+                    for (int j = 0; j < dogs.size(); j++) {
+                        for (int k = 0; k < wildAnimals.size(); k++) {
+                            if (dogs.get(j).xposision==wildAnimals.get(k).xposision && dogs.get(j).yposision==wildAnimals.get(k).yposision){
+                                wildAnimals.remove(k);
+                                dogs.remove(j);
+                            }
+                        }
+                    }
+                    //---------------------------------------------------------------- wild dom killer
+                    for (int j = 0; j < domanimals.size(); j++) {
+                        for (int k = 0; k < wildAnimals.size(); k++) {
+                            if (domanimals.get(j).xposision==wildAnimals.get(k).xposision && domanimals.get(j).yposision==wildAnimals.get(k).yposision){
+                                domanimals.remove(j);
+                            }
+                        }
+                    }
+                    //----------------------------------------------------------------- kind cat
+
+                    for (int j = 0; j < cats.size(); j++) {
+                        for (int k = 0; k < 6; k++) {
+                            for (int l = 0; l < 6; l++) {
+                                for (int m = 0; m < 12; m++) {
+                                    if (cats.get(j).xposision==l && cats.get(j).yposision==k){
+                                        boolean z =false;
+                                        if (homeProduct[k][l][m]/10==1){
+                                            z=Storage.add("egg" , homeProduct[k][l][m]%10);
+                                            if (z)
+                                                homeProduct[k][l][m]=0;
+
+                                        }
+                                        else if (homeProduct[k][l][m]/10==2){
+                                            z=Storage.add("feather" , homeProduct[k][l][m]%10);
+                                            if (z)
+                                                homeProduct[k][l][m]=0;
+
+                                        }
+                                        else if (homeProduct[k][l][m]/10==3){
+                                            z=Storage.add("milk" , homeProduct[k][l][m]%10);
+                                            if (z)
+                                                homeProduct[k][l][m]=0;
+
+                                        }
+                                        else if (homeProduct[k][l][m]/10==4){
+                                            z=Storage.add("flour" , homeProduct[k][l][m]%10);
+                                            if (z)
+                                                homeProduct[k][l][m]=0;
+
+                                        }
+                                        else if (homeProduct[k][l][m]/10==5){
+                                            z=Storage.add("fabric" , homeProduct[k][l][m]%10);
+                                            if (z)
+                                                homeProduct[k][l][m]=0;
+
+                                        }
+                                        else if (homeProduct[k][l][m]/10==6){
+                                            z=Storage.add("packmilk" , homeProduct[k][l][m]%10);
+                                            if (z)
+                                                homeProduct[k][l][m]=0;
+
+                                        }
+                                        else if (homeProduct[k][l][m]/10==7){
+                                            z=Storage.add("bread" , homeProduct[k][l][m]%10);
+                                            if (z)
+                                                homeProduct[k][l][m]=0;
+
+                                        }
+                                        else if (homeProduct[k][l][m]/10==8){
+                                            z=Storage.add("cloths" , homeProduct[k][l][m]%10);
+                                            if (z)
+                                                homeProduct[k][l][m]=0;
+
+                                        }
+                                        else if (homeProduct[k][l][m]/10==9){
+                                            z=Storage.add("icecream" , homeProduct[k][l][m]%10);
+                                            if (z)
+                                                homeProduct[k][l][m]=0;
+
+                                        }
+                                    }
+
+                                }
+
+                            }
+
+                        }
+
+                    }
+                    //-------------------------------------------------------------------- final check
+                    if (Storage.coin==)
 
 
 
 
-                    //---------------------------------------------------------------------------------------------------
+
+                    //----------------------------------------------------------------------------------------
                 }
 
 
