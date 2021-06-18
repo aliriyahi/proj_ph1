@@ -13,6 +13,7 @@ public class Manager {
     String wildanimals;
     int timeprize;
     int prize;
+    String[] wildTn ;
 
 
 
@@ -43,6 +44,8 @@ public class Manager {
         int[][] grass=new int[6][6];
         int millTime=0,bakeryTime=0,iceStoreTime=0,tailoringTime=0,packmilkTime=0,prodfabricTime=0;
         int truckTime = 0;
+        int chickenTime=0,turkeyTime=0,buffaloTime=0;
+
 
         Scanner sc = new Scanner(System.in);
         String command = "a";
@@ -80,7 +83,9 @@ public class Manager {
                         domesticAnimal.animalPrice = 100;
                         domesticAnimal.product = "egg";
                         domesticAnimal.timeToProduce = 2;
+                        domesticAnimal.turnTime = turn + domesticAnimal.timeToProduce;
                         domanimals.add(domesticAnimal);
+
                         Storage.coin -= 100;
                         System.out.println("done");
                     }else
@@ -93,6 +98,7 @@ public class Manager {
                         domesticAnimal.animalPrice = 200;
                         domesticAnimal.product = "feather";
                         domesticAnimal.timeToProduce = 3;
+                        domesticAnimal.turnTime = turn + domesticAnimal.timeToProduce;
                         domanimals.add(domesticAnimal);
                         Storage.coin -= 200;
                         System.out.println("done");
@@ -107,6 +113,7 @@ public class Manager {
                         domesticAnimal.animalPrice = 400;
                         domesticAnimal.product = "milk";
                         domesticAnimal.timeToProduce = 5;
+                        domesticAnimal.turnTime = turn + domesticAnimal.timeToProduce;
                         domanimals.add(domesticAnimal);
                         Storage.coin -= 400;
                         System.out.println("done");
@@ -422,6 +429,82 @@ public class Manager {
             }
             //--------------------------------------------------------------------------------
             else if (command.toUpperCase().startsWith("TURN")){
+                int n = Integer.parseInt(command.split("\\s")[1]);
+
+                for (int i = 0; i < n; i++) {
+                    turn ++;
+                    //--------------------------------------------------------- handling movement
+                    for (int j = 0; j < wildAnimals.size(); j++) {
+                        wildAnimals.get(i).animalmove();
+                    }
+                    for (int j = 0; j < wildAnimals.size(); j++) {
+                        wildAnimals.get(i).animalmove();
+                    }
+                    for (int j = 0; j < cats.size(); j++) {
+                        cats.get(i).animalmove();
+                    }
+                    for (int j = 0; j < dogs.size(); j++) {
+                        dogs.get(i).animalmove();
+                    }
+                    //-------------------------------------------------------- handling products
+
+                    for (int j = 0; j < domanimals.size(); j++) {
+                        if(turn >= domanimals.get(i).turnTime){
+                            if(domanimals.get(i).animalName.equals("chicken")){
+                                domanimals.get(i).turnTime += domanimals.get(i).timeToProduce;
+                                if(homeProduct[domanimals.get(i).xposision][domanimals.get(i).yposision][0] == 0)
+                                    homeProduct[domanimals.get(i).xposision][domanimals.get(i).yposision][0] = 11;
+                                else
+                                    homeProduct[domanimals.get(i).xposision][domanimals.get(i).yposision][0] += 1;
+                            }else if(domanimals.get(i).animalName.equals("turkey")){
+                                domanimals.get(i).turnTime += domanimals.get(i).timeToProduce;
+                                if(homeProduct[domanimals.get(i).xposision][domanimals.get(i).yposision][0] == 0)
+                                    homeProduct[domanimals.get(i).xposision][domanimals.get(i).yposision][0] = 21;
+                                else
+                                    homeProduct[domanimals.get(i).xposision][domanimals.get(i).yposision][0] += 1;
+                            }else if(domanimals.get(i).animalName.equals("buffalo")){
+                                domanimals.get(i).turnTime += domanimals.get(i).timeToProduce;
+                                if(homeProduct[domanimals.get(i).xposision][domanimals.get(i).yposision][0] == 0)
+                                    homeProduct[domanimals.get(i).xposision][domanimals.get(i).yposision][0] = 31;
+                                else
+                                    homeProduct[domanimals.get(i).xposision][domanimals.get(i).yposision][0] += 1;
+                            }
+                        }
+                    }
+                    //----------------------------------------------------------- handling wildAnimals
+                    for (int j = 0; j < wildTn.length - 1; j++) {
+                        if(wildTn[i].toLowerCase().equals("lion")){
+                            if(turn >= Integer.parseInt(wildTn[i+1])) {
+                                WildAnimal wildAnimal = new WildAnimal();
+                                wildAnimal.speed = 1;
+                                wildAnimal.maxCage = 3;
+                                wildAnimals.add(wildAnimal);
+                            }
+                        }
+                        else if(wildTn[i].toLowerCase().equals("bear")){
+                            if(turn >= Integer.parseInt(wildTn[i+1])) {
+                                WildAnimal wildAnimal = new WildAnimal();
+                                wildAnimal.speed = 1;
+                                wildAnimal.maxCage = 4;
+                                wildAnimals.add(wildAnimal);
+                            }
+                        }
+                        else if(wildTn[i].toLowerCase().equals("tiger")){
+                            if(turn >= Integer.parseInt(wildTn[i+1])) {
+                                WildAnimal wildAnimal = new WildAnimal();
+                                wildAnimal.speed = 2;
+                                wildAnimal.maxCage = 4;
+                                wildAnimals.add(wildAnimal);
+                            }
+                        }
+                    }
+                    //-----------------------------------------------------------------------------------
+
+
+
+
+                    //---------------------------------------------------------------------------------------------------
+                }
 
 
 
@@ -464,6 +547,8 @@ public class Manager {
                     Storage.coin = startCoin;
                     this.tasks=s.nextLine().substring(6);
                     this.wildanimals=s.nextLine().substring(8);
+                    this.wildTn = wildanimals.split("\\s");
+
                     this.timeprize=Integer.parseInt(s.nextLine().split("\\s")[1]);
                     this.prize=Integer.parseInt(s.nextLine().split("\\s")[1]);
                     break;

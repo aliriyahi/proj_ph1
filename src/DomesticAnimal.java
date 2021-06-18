@@ -4,6 +4,7 @@
         public int animalPrice;
         public int animalHealth=100;
         public int timeToProduce;
+        public int turnTime;
         public String product;
         public int speed=1;
         public int xposision=(int)Math.random()%6+1;
