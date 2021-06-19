@@ -52,8 +52,10 @@ public class Manager {
         String command = "a";
 
 
+
         //__________________________________________________________________________
         while (!command.contains("EXIT")){
+            System.out.println("ENTER YOUR COMMAND :");
             command = sc.nextLine();
 
             if (command.toUpperCase().startsWith("BUY")){
@@ -234,14 +236,24 @@ public class Manager {
             }
             //---------------------------------------------------------------------------
             else if (command.toUpperCase().startsWith("PLANT")){
-                int x=Integer.parseInt(command.split("\\s")[1])-1;
-                int y=Integer.parseInt(command.split("\\s")[2])-1;
-                if(well.water > 0) {
-                    grass[y][x] += 1;
-                    well.water -= 1;
+                if (command.split("\\s").length!=3)
+                    System.out.println("wrong input!");
+                else {
+                    int x=Integer.parseInt(command.split("\\s")[1])-1;
+                    int y=Integer.parseInt(command.split("\\s")[2])-1;
+                    if (x> 5|| x<0 || y>5 || y<0)
+                        System.out.println("wrong input");
+                    else {
+                        if(well.water > 0) {
+                            grass[y][x] += 1;
+                            well.water -= 1;
+                        }
+                        else
+                            System.out.println("you dont have any water!");
+                    }
+
                 }
-                else
-                    System.out.println("you dont have any water!");
+
             }
             //---------------------------------------------------------------------------
             else if (command.toUpperCase().startsWith("WORK")){
@@ -445,60 +457,60 @@ public class Manager {
                     //--------------------------------------------------------- handling movement
 
                     for (int j = 0; j < wildAnimals.size(); j++) {
-                        wildAnimals.get(i).animalmove();
+                        wildAnimals.get(j).animalmove();
                     }
                     for (int j = 0; j < cats.size(); j++) {
-                        cats.get(i).animalmove(homeProduct);
+                        cats.get(j).animalmove(homeProduct);
                     }
                     for (int j = 0; j < dogs.size(); j++) {
-                        dogs.get(i).animalmove();
+                        dogs.get(j).animalmove();
                     }
 
                     //-------------------------------------------------------- handling products
 
                     for (int j = 0; j < domanimals.size(); j++) {
-                        if(turn >= domanimals.get(i).turnTime){
-                            if(domanimals.get(i).animalName.equals("chicken")){
-                                domanimals.get(i).turnTime += domanimals.get(i).timeToProduce;
-                                if(homeProduct[domanimals.get(i).yposision][domanimals.get(i).xposision][0] == 0)
-                                    homeProduct[domanimals.get(i).yposision][domanimals.get(i).xposision][0] = 11;
+                        if(turn >= domanimals.get(j).turnTime){
+                            if(domanimals.get(j).animalName.equals("chicken")){
+                                domanimals.get(j).turnTime += domanimals.get(j).timeToProduce;
+                                if(homeProduct[domanimals.get(j).yposision][domanimals.get(j).xposision][0] == 0)
+                                    homeProduct[domanimals.get(j).yposision][domanimals.get(j).xposision][0] = 11;
                                 else
-                                    homeProduct[domanimals.get(i).yposision][domanimals.get(i).xposision][0] += 1;
-                            }else if(domanimals.get(i).animalName.equals("turkey")){
-                                domanimals.get(i).turnTime += domanimals.get(i).timeToProduce;
-                                if(homeProduct[domanimals.get(i).yposision][domanimals.get(i).xposision][0] == 0)
-                                    homeProduct[domanimals.get(i).yposision][domanimals.get(i).xposision][0] = 21;
+                                    homeProduct[domanimals.get(j).yposision][domanimals.get(j).xposision][0] += 1;
+                            }else if(domanimals.get(j).animalName.equals("turkey")){
+                                domanimals.get(j).turnTime += domanimals.get(j).timeToProduce;
+                                if(homeProduct[domanimals.get(j).yposision][domanimals.get(j).xposision][0] == 0)
+                                    homeProduct[domanimals.get(j).yposision][domanimals.get(j).xposision][0] = 21;
                                 else
-                                    homeProduct[domanimals.get(i).yposision][domanimals.get(i).xposision][0] += 1;
-                            }else if(domanimals.get(i).animalName.equals("buffalo")){
-                                domanimals.get(i).turnTime += domanimals.get(i).timeToProduce;
-                                if(homeProduct[domanimals.get(i).yposision][domanimals.get(i).xposision][0] == 0)
-                                    homeProduct[domanimals.get(i).yposision][domanimals.get(i).xposision][0] = 31;
+                                    homeProduct[domanimals.get(j).yposision][domanimals.get(j).xposision][0] += 1;
+                            }else if(domanimals.get(j).animalName.equals("buffalo")){
+                                domanimals.get(j).turnTime += domanimals.get(j).timeToProduce;
+                                if(homeProduct[domanimals.get(j).yposision][domanimals.get(j).xposision][0] == 0)
+                                    homeProduct[domanimals.get(j).yposision][domanimals.get(j).xposision][0] = 31;
                                 else
-                                    homeProduct[domanimals.get(i).yposision][domanimals.get(i).xposision][0] += 1;
+                                    homeProduct[domanimals.get(j).yposision][domanimals.get(j).xposision][0] += 1;
                             }
                         }
                     }
                     //----------------------------------------------------------- handling wildAnimals
                     for (int j = 0; j < wildTn.length - 1; j++) {
-                        if(wildTn[i].toLowerCase().equals("lion")){
-                            if(turn >= Integer.parseInt(wildTn[i+1])) {
+                        if(wildTn[j].toLowerCase().equals("lion")){
+                            if(turn >= Integer.parseInt(wildTn[j+1])) {
                                 WildAnimal wildAnimal = new WildAnimal();
                                 wildAnimal.speed = 1;
                                 wildAnimal.maxCage = 3;
                                 wildAnimals.add(wildAnimal);
                             }
                         }
-                        else if(wildTn[i].toLowerCase().equals("bear")){
-                            if(turn >= Integer.parseInt(wildTn[i+1])) {
+                        else if(wildTn[j].toLowerCase().equals("bear")){
+                            if(turn >= Integer.parseInt(wildTn[j+1])) {
                                 WildAnimal wildAnimal = new WildAnimal();
                                 wildAnimal.speed = 1;
                                 wildAnimal.maxCage = 4;
                                 wildAnimals.add(wildAnimal);
                             }
                         }
-                        else if(wildTn[i].toLowerCase().equals("tiger")){
-                            if(turn >= Integer.parseInt(wildTn[i+1])) {
+                        else if(wildTn[j].toLowerCase().equals("tiger")){
+                            if(turn >= Integer.parseInt(wildTn[j+1])) {
                                 WildAnimal wildAnimal = new WildAnimal();
                                 wildAnimal.speed = 2;
                                 wildAnimal.maxCage = 4;
@@ -565,7 +577,7 @@ public class Manager {
                     int grasscheck=0;
                     for (int j = 0; j < 6; j++) {
                         for (int k = 0; k < 6; k++) {
-                            if (grass[i][j]!=0)
+                            if (grass[j][k]!=0)
                                 grasscheck=1;
                         }
 
@@ -573,7 +585,7 @@ public class Manager {
                     if (grasscheck==0)
                         System.out.println("there is no grass !");
                     //--------------------------------------------------------------- cage check
-                    for (int j = 0; j < 6; j++) {
+                    for (int j = 0; j < wildAnimals.size(); j++) {
                         if (wildAnimals.get(j).cages>=wildAnimals.get(j).maxCage){
                             if (wildAnimals.get(j).animalname.equals("loin")){
                                 homeProduct[wildAnimals.get(j).yposision][wildAnimals.get(j).xposision][3]=4;
@@ -882,6 +894,8 @@ public class Manager {
                 if(Return == true)
                     break;
             }
+            else
+                System.out.println("wrong input ...");
 
         }
 

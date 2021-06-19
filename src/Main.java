@@ -32,13 +32,13 @@ public class Main {
             if(Return) {
                 System.out.println("1 - LOG IN\n2 - SIGN UP");
                 logSign1 = sc.next();
-                if (logSign1.equals("EXIT"))
+                if (logSign1.toUpperCase().equals("EXIT"))
                     System.exit(0);
                 else
                     logSign = Integer.parseInt(logSign1);
 
                 if (logSign == 1) {
-                    b = false;
+                    //b = false;
 
                     try {
                         boolean temp = true;
@@ -97,7 +97,7 @@ public class Main {
 
 
                 } else if (logSign == 2) {
-                    b = false;
+                    //b = false;
 
                     try {
                         boolean temp = true;
@@ -144,7 +144,8 @@ public class Main {
             System.out.println("Menu :\nSTART [level]\nLOG OUT\nSETTINGS");
 
             menu = sc.nextLine();
-            if (menu.contains("START")) {
+            menu = sc.nextLine();
+            if (menu.toUpperCase().contains("START")) {
                 startLevel = Integer.parseInt(menu.split("\\s")[1]);
                 if (startLevel <= level) {
 
@@ -152,7 +153,7 @@ public class Main {
                     manager.username = username;
                     manager.password = password;
                     manager.previousCoin = previousCoin;
-                    System.out.println("Entering the ADVENTURES ...");
+                    System.out.println("RUNNING the ADVENTURES ...");
                     manager.filereader();
                     manager.run();
                     level++;
@@ -166,19 +167,19 @@ public class Main {
                         manager.username = username;
                         manager.password = password;
                         manager.previousCoin = previousCoin;
-                        System.out.println("Entering the ADVENTURES ...");
+                        System.out.println("RUNNING the ADVENTURES ...");
                         manager.filereader();
                         manager.run();
                         level++;
                         Return = false;
                     }
                 }
-            } else if (menu.contains("LOG OUT")) {
+            } else if (menu.toUpperCase().contains("LOG OUT")) {
                 continue;
 
-            } else if (menu.contains("SETTING")) {
+            } else if (menu.toUpperCase().contains("SETTING")) {
 
-            } else if (menu.contains("EXIT")) {
+            } else if (menu.toUpperCase().contains("EXIT")) {
                 System.exit(0);
             } else {
                 System.out.println("Wrong Input");
