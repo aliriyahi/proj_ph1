@@ -26,24 +26,40 @@ public class Printinformation {
         }
     }
     public void domAnimal(ArrayList<DomesticAnimal> animals){
+        int x=0;
+        int y=0;
         for (int i = 0; i < animals.size(); i++) {
-            System.out.println(animals.get(i).animalName+ " " + animals.get(i).animalHealth+ " " + "["+ animals.get(i).xposision + " "+ animals.get(i).yposision+"]");
+            x=animals.get(i).xposision+1;
+            y=animals.get(i).yposision+1;
+            System.out.println(animals.get(i).animalName+ " " + animals.get(i).animalHealth+ " " + "["+ x + " "+ y+"]");
         }
     }
     public void wildAnimal(ArrayList<WildAnimal> animals){
+        int x=0;
+        int y=0;
         for (int i = 0; i < animals.size(); i++) {
-            System.out.println(animals.get(i).animalname + " " + animals.get(i).cages +"/"+animals.get(i).maxCage + " ["+animals.get(i).xposision +" "+ animals.get(i).yposision+ "]");
+            x=animals.get(i).xposision+1;
+            y=animals.get(i).yposision+1;
+            System.out.println(animals.get(i).animalname + " " + animals.get(i).cages +"/"+animals.get(i).maxCage + " ["+x+" "+ y+ "]");
         }
     }
     public void dog(ArrayList<Dog> animals){
+        int x=0;
+        int y=0;
         for (int i = 0; i < animals.size(); i++) {
-            System.out.println(animals.get(i).name+" "+"["+animals.get(i).xposision+" "+animals.get(i).yposision+"]");
+            x=animals.get(i).xposision+1;
+            y=animals.get(i).yposision+1;
+            System.out.println(animals.get(i).name+" "+"["+x+" "+y+"]");
 
         }
     }
     public void cat(ArrayList<Cat> animals){
+        int x=0;
+        int y=0;
         for (int i = 0; i < animals.size(); i++) {
-            System.out.println(animals.get(i).name+" "+"["+animals.get(i).xposision+" "+animals.get(i).yposision+"]");
+            x=animals.get(i).xposision+1;
+            y=animals.get(i).yposision+1;
+            System.out.println(animals.get(i).name+" "+"["+x+" "+y+"]");
 
         }
     }

@@ -18,8 +18,8 @@ public class Manager {
     String[] wildTn ;
     String username , password;
     int previousCoin;
-
-
+    File log = new File("log.txt");
+    Date date = new Date();
 
     public Manager(int level){
         this.level = level;
@@ -35,6 +35,7 @@ public class Manager {
         ArrayList<WildAnimal> wildAnimals = new ArrayList();
         ArrayList<Dog> dogs = new ArrayList();
         ArrayList<Cat> cats = new ArrayList();
+        ArrayList<Product> products = new ArrayList();
         Printinformation printinformation = new Printinformation();
         Car car = new Car();
         Mill mill = new Mill();
@@ -71,6 +72,14 @@ public class Manager {
                         System.out.println("done");
                     }else
                         System.out.println("you dont have enough coin!");
+                    try {
+                        PrintWriter logger  = new PrintWriter(new FileWriter(log , true));
+                        logger.append("[INFO] ,"+date.toLocaleString()+",CAT BOUGHT SUCCESSFULLY");
+                        logger.println();
+                        logger.close();
+                    }catch (Exception e){
+                        System.out.println(e);
+                    }
 
                 }
                 else if (command.toLowerCase().contains("dog")){
@@ -81,6 +90,14 @@ public class Manager {
                         System.out.println("done");
                     }else
                         System.out.println("you dont have enough coin!");
+                    try {
+                        PrintWriter logger  = new PrintWriter(new FileWriter(log , true));
+                        logger.append("[INFO] ,"+date.toLocaleString()+",DOG BOUGHT SUCCESSFULLY");
+                        logger.println();
+                        logger.close();
+                    }catch (Exception e){
+                        System.out.println(e);
+                    }
 
                 }
                 else if (command.toLowerCase().contains("chicken")){
@@ -97,6 +114,14 @@ public class Manager {
                         System.out.println("done");
                     }else
                         System.out.println("you dont have enough coin!");
+                    try {
+                        PrintWriter logger  = new PrintWriter(new FileWriter(log , true));
+                        logger.append("[INFO] ,"+date.toLocaleString()+",CHICKEN BOUGHT SUCCESSFULLY");
+                        logger.println();
+                        logger.close();
+                    }catch (Exception e){
+                        System.out.println(e);
+                    }
                 }
                 else if (command.toLowerCase().contains("turkey")){
                     if(200 <= Storage.coin) {
@@ -111,6 +136,14 @@ public class Manager {
                         System.out.println("done");
                     }else
                         System.out.println("you dont have enough coin!");
+                    try {
+                        PrintWriter logger  = new PrintWriter(new FileWriter(log , true));
+                        logger.append("[INFO] ,"+date.toLocaleString()+",TURKEY BOUGHT SUCCESSFULLY");
+                        logger.println();
+                        logger.close();
+                    }catch (Exception e){
+                        System.out.println(e);
+                    }
 
                 }
                 else if (command.toLowerCase().contains("buffalo")){
@@ -126,10 +159,28 @@ public class Manager {
                         System.out.println("done");
                     }else
                         System.out.println("you dont have enough coin!");
+                    try {
+                        PrintWriter logger  = new PrintWriter(new FileWriter(log , true));
+                        logger.append("[INFO] ,"+date.toLocaleString()+",BUFFALO BOUGHT SUCCESSFULLY");
+                        logger.println();
+                        logger.close();
+                    }catch (Exception e){
+                        System.out.println(e);
+                    }
 
                 }
-                else
+                else{
                     System.out.println("wrong input!");
+                    try {
+                        PrintWriter logger  = new PrintWriter(new FileWriter(log , true));
+                        logger.append("[ERROR] ,"+date.toLocaleString()+",WRONG INPUT");
+                        logger.println();
+                        logger.close();
+                    }catch (Exception e){
+                        System.out.println(e);
+                    }
+                }
+
 
             }
             //-------------------------------------------------------------------------
@@ -139,6 +190,7 @@ public class Manager {
                 boolean error=true;
                 for (int i = 0; i < 12; i++) {
                     if (homeProduct[y][x][i]>0){
+
                         error=false;
                         int temp = homeProduct[y][x][i];
                         if (temp/10==1){
@@ -163,8 +215,7 @@ public class Manager {
                                 System.out.println("Storage have not enough space!");
                         }
                         else if (temp==4){
-
-                            boolean b = Storage.add("loin",1);
+                            boolean b = Storage.add("lion",1);
                             if(b)
                                 homeProduct[y][x][i] = 0;
                             else
@@ -226,33 +277,99 @@ public class Manager {
                             else
                                 System.out.println("Storage have not enough space!");
                         }
+                        try {
+                            PrintWriter logger  = new PrintWriter(new FileWriter(log , true));
+                            logger.append("[INFO] ,"+date.toLocaleString()+", PICKED UP SUCCESSFULLY");
+                            logger.println();
+                            logger.close();
+                        }catch (Exception e){
+                            System.out.println(e);
+                        }
 
                     }
                 }
-                if (error==true)
+                if (error==true){
                     System.out.println("there is no product here!");
+                    try {
+                        PrintWriter logger  = new PrintWriter(new FileWriter(log , true));
+                        logger.append("[ERROR] ,"+date.toLocaleString()+",PICKUP FAILED");
+                        logger.println();
+                        logger.close();
+                    }catch (Exception e){
+                        System.out.println(e);
+                    }
+                }
+
 
             }
             //---------------------------------------------------------------------------
             else if (command.toUpperCase().startsWith("WELL")){
-                if(well.water == 0)
+                if(well.water == 0){
                     well.water=5;
-                else
+                    try {
+                        PrintWriter logger  = new PrintWriter(new FileWriter(log , true));
+                        logger.append("[INFO] ,"+date.toLocaleString()+",WELLED SUCCESSFULLY");
+                        logger.println();
+                        logger.close();
+                    }catch (Exception e){
+                        System.out.println(e);
+                    }
+                }
+
+                else{
                     System.out.println("there is still water");
+                    try {
+                        PrintWriter logger  = new PrintWriter(new FileWriter(log , true));
+                        logger.append("[ERROR] ,"+date.toLocaleString()+",WELL ERROR");
+                        logger.println();
+                        logger.close();
+                    }catch (Exception e){
+                        System.out.println(e);
+                    }
+                }
+
             }
             //---------------------------------------------------------------------------
             else if (command.toUpperCase().startsWith("PLANT")){
-                if (command.split("\\s").length!=3)
+                if (command.split("\\s").length!=3){
                     System.out.println("wrong input!");
+                    try {
+                        PrintWriter logger  = new PrintWriter(new FileWriter(log , true));
+                        logger.append("[ERROR] ,"+date.toLocaleString()+",WRONG INPUT");
+                        logger.println();
+                        logger.close();
+                    }catch (Exception e){
+                        System.out.println(e);
+                    }
+                }
+
                 else {
                     int x=Integer.parseInt(command.split("\\s")[1])-1;
                     int y=Integer.parseInt(command.split("\\s")[2])-1;
-                    if (x> 5|| x<0 || y>5 || y<0)
+                    if (x> 5|| x<0 || y>5 || y<0){
                         System.out.println("wrong input");
+                        try {
+                            PrintWriter logger  = new PrintWriter(new FileWriter(log , true));
+                            logger.append("[ERROR] ,"+date.toLocaleString()+",WRONG INPUT");
+                            logger.println();
+                            logger.close();
+                        }catch (Exception e){
+                            System.out.println(e);
+                        }
+                    }
+
                     else {
                         if(well.water > 0) {
                             grass[y][x] += 1;
                             well.water -= 1;
+                            try {
+                                PrintWriter logger  = new PrintWriter(new FileWriter(log , true));
+                                logger.append("[INFO] ,"+date.toLocaleString()+",PLANTED SUCCESSFULLY");
+                                logger.println();
+                                logger.close();
+                            }catch (Exception e){
+                                System.out.println(e);
+                            }
                         }
                         else
                             System.out.println("you dont have any water!");
@@ -334,64 +451,93 @@ public class Manager {
             }
             //-----------------------------------------------------------------------------
             else if (command.toUpperCase().startsWith("UPGRADE")){
-                if (command.toLowerCase().contains("mill")){
-                    mill.upgrade(Integer.parseInt(command.split("\\s")[2]));
+                if (command.split("\\s").length==3){
+                    try {
+                        PrintWriter logger  = new PrintWriter(new FileWriter(log , true));
+                        logger.append("[INFO] ,"+date.toLocaleString()+",UPGRADED A WORKSHOP");
+                        logger.println();
+                        logger.close();
+                    }catch (Exception e){
+                        System.out.println(e);
+                    }
+                    if (command.toLowerCase().contains("mill")){
+                        mill.upgrade(Integer.parseInt(command.split("\\s")[2]));
+                    }
+                    else if (command.toLowerCase().contains("bakery")){
+                        bakery.upgrade(Integer.parseInt(command.split("\\s")[2]));
+                    }
+                    else if (command.toLowerCase().contains("packmilk")){
+                        packMilk.upgrade(Integer.parseInt(command.split("\\s")[2]));
+                    }
+                    else if (command.toLowerCase().contains("prodfabric")){
+                        prodFabric.upgrade(Integer.parseInt(command.split("\\s")[2]));
+                    }
+                    else if (command.toLowerCase().contains("icestore")){
+                        iceStore.upgrade(Integer.parseInt(command.split("\\s")[2]));
+                    }
+                    else if (command.toLowerCase().contains("tailoring")){
+                        tailoring.upgrade(Integer.parseInt(command.split("\\s")[2]));
+                    }
+                }else{
+                    System.out.println("wrong input!");
+                    try {
+                        PrintWriter logger  = new PrintWriter(new FileWriter(log , true));
+                        logger.append("[ERROR] ,"+date.toLocaleString()+",WRONG INPUT");
+                        logger.println();
+                        logger.close();
+                    }catch (Exception e){
+                        System.out.println(e);
+                    }
                 }
-                else if (command.toLowerCase().contains("bakery")){
-                    bakery.upgrade(Integer.parseInt(command.split("\\s")[2]));
-                }
-                else if (command.toLowerCase().contains("packmilk")){
-                    packMilk.upgrade(Integer.parseInt(command.split("\\s")[2]));
-                }
-                else if (command.toLowerCase().contains("prodfabric")){
-                    prodFabric.upgrade(Integer.parseInt(command.split("\\s")[2]));
-                }
-                else if (command.toLowerCase().contains("icestore")){
-                    iceStore.upgrade(Integer.parseInt(command.split("\\s")[2]));
-                }
-                else if (command.toLowerCase().contains("tailoring")){
-                    tailoring.upgrade(Integer.parseInt(command.split("\\s")[2]));
-                }
+
 
             }
             //------------------------------------------------------------------------------
             else if (command.toUpperCase().startsWith("BUILD")){
-                if (command.toLowerCase().contains("mill")){
-                    mill.build();
-                    if (mill.exist==false)
-                        System.out.println("YOU DO NOT HAVE ENOUGH COIN!");
+                if (command.split("\\s").length==2){
 
-                }
-                else if (command.toLowerCase().contains("bakery")){
-                    bakery.build();
-                    if (bakery.exist==false)
-                        System.out.println("YOU DO NOT HAVE ENOUGH COIN!");
+                    if (command.toLowerCase().contains("mill")){
+                        mill.build();
+                        if (mill.exist==false)
+                            System.out.println("YOU DO NOT HAVE ENOUGH COIN!");
 
-                }
-                else if (command.toLowerCase().contains("packmilk")){
-                    packMilk.build();
-                    if (packMilk.exist==false)
-                        System.out.println("YOU DO NOT HAVE ENOUGH COIN!");
+                    }
+                    else if (command.toLowerCase().contains("bakery")){
+                        bakery.build();
+                        if (bakery.exist==false)
+                            System.out.println("YOU DO NOT HAVE ENOUGH COIN!");
 
-                }
-                else if (command.toLowerCase().contains("prodfabric")){
-                    prodFabric.build();
-                    if (prodFabric.exist==false)
-                        System.out.println("YOU DO NOT HAVE ENOUGH COIN!");
+                    }
+                    else if (command.toLowerCase().contains("packmilk")){
+                        packMilk.build();
+                        if (packMilk.exist==false)
+                            System.out.println("YOU DO NOT HAVE ENOUGH COIN!");
 
-                }
-                else if (command.toLowerCase().contains("icestore")){
-                    iceStore.build();
-                    if (iceStore.exist==false)
-                        System.out.println("YOU DO NOT HAVE ENOUGH COIN!");
+                    }
+                    else if (command.toLowerCase().contains("prodfabric")){
+                        prodFabric.build();
+                        if (prodFabric.exist==false)
+                            System.out.println("YOU DO NOT HAVE ENOUGH COIN!");
 
-                }
-                else if (command.toLowerCase().contains("tailoring")){
-                    tailoring.build();
-                    if (tailoring.exist==false)
-                        System.out.println("YOU DO NOT HAVE ENOUGH COIN!");
+                    }
+                    else if (command.toLowerCase().contains("icestore")){
+                        iceStore.build();
+                        if (iceStore.exist==false)
+                            System.out.println("YOU DO NOT HAVE ENOUGH COIN!");
 
+                    }
+                    else if (command.toLowerCase().contains("tailoring")){
+                        tailoring.build();
+                        if (tailoring.exist==false)
+                            System.out.println("YOU DO NOT HAVE ENOUGH COIN!");
+
+                    }
+                    else
+                        System.out.println("wrong input!");
                 }
+                else
+                    System.out.println("wrong input!");
+
 
             }
             //--------------------------------------------------------------------------------
@@ -435,10 +581,15 @@ public class Manager {
             }
             //--------------------------------------------------------------------------------
             else if (command.toUpperCase().startsWith("TRUCK GO")){
-                if(truckTime == 0)
-                    truckTime = turn + car.time;
-                else
-                    System.out.println("Car is on the road...");
+                if (car.useSpace==0)
+                    System.out.println("You should load the truck first!");
+                else {
+                    if(truckTime == 0 )
+                        truckTime = turn + car.time;
+                    else
+                        System.out.println("Car is on the road...");
+                }
+
 
             }
             //--------------------------------------------------------------------------------
@@ -463,7 +614,8 @@ public class Manager {
                     //--------------------------------------------------------- handling movement
 
                     for (int j = 0; j < wildAnimals.size(); j++) {
-                        wildAnimals.get(j).animalmove();
+                        if (wildAnimals.get(j).cages<wildAnimals.get(j).maxCage)
+                            wildAnimals.get(j).animalmove();
                     }
                     for (int j = 0; j < cats.size(); j++) {
                         cats.get(j).animalmove(homeProduct);
@@ -472,45 +624,42 @@ public class Manager {
                         dogs.get(j).animalmove();
                     }
                     //------------------------------------------------------- prod remove time
-//                    for (int j = 0; j < domanimals.size(); j++) {
-//                        if(domanimals.get(j).prodRemoveTime1 <= turn){
-//                            domanimals.get(j).prodRemoveTime1 = 0;
-//                            if(domanimals.get(j).animalName.equals("chicken")) {
-//
-//                            }
-//                            else if(domanimals.get(j).animalName.equals("turkey")){
-//
-//                            }
-//
-//                        }
-//                        if(domanimals.get(j).prodRemoveTime2 <= turn){
-//                            domanimals.get(j).prodRemoveTime2 = 0;
-//
-//                        }
-//
-//                    }
-
+                    for (int j = 0; j < products.size(); j++) {
+                        if (products.get(j).removetime <turn){
+                            if (homeProduct[products.get(j).yposission][products.get(j).xposission][products.get(j).name]!=0)
+                                homeProduct[products.get(j).yposission][products.get(j).xposission][products.get(j).name]--;
+                            products.remove(j);
+                        }
+                    }
                     //-------------------------------------------------------- handling products
 
                     for (int j = 0; j < domanimals.size(); j++) {
                         if(turn >= domanimals.get(j).turnTime){
                             if(domanimals.get(j).animalName.equals("chicken")){
                                 domanimals.get(j).turnTime += domanimals.get(j).timeToProduce;
-                                if(domanimals.get(j).prodRemoveTime1 == 0)
-                                    domanimals.get(j).prodRemoveTime1 = turn + 4;
-                                else
-                                    domanimals.get(j).prodRemoveTime2 = turn + 4;
-                                if(homeProduct[domanimals.get(j).yposision][domanimals.get(j).xposision][0] == 0)
+                                Product product = new Product();
+                                product.name=0;
+                                product.xposission = domanimals.get(j).xposision;
+                                product.yposission = domanimals.get(j).yposision;
+                                product.existtime = 4;
+                                product.removetime=turn+4;
+                                products.add(product);
+                                if(homeProduct[domanimals.get(j).yposision][domanimals.get(j).xposision][0] == 0){
                                     homeProduct[domanimals.get(j).yposision][domanimals.get(j).xposision][0] = 11;
+                                }
+
                                 else
                                     homeProduct[domanimals.get(j).yposision][domanimals.get(j).xposision][0] += 1;
                             }
                             else if(domanimals.get(j).animalName.equals("turkey")){
                                 domanimals.get(j).turnTime += domanimals.get(j).timeToProduce;
-                                if(domanimals.get(j).prodRemoveTime1 == 0)
-                                    domanimals.get(j).prodRemoveTime1 = turn + 4;
-                                else
-                                    domanimals.get(j).prodRemoveTime2 = turn + 4;
+                                Product product = new Product();
+                                product.name=1;
+                                product.xposission = domanimals.get(j).xposision;
+                                product.yposission = domanimals.get(j).yposision;
+                                product.existtime = 4;
+                                product.removetime=turn+4;
+                                products.add(product);
                                 if(homeProduct[domanimals.get(j).yposision][domanimals.get(j).xposision][0] == 0)
                                     homeProduct[domanimals.get(j).yposision][domanimals.get(j).xposision][0] = 21;
                                 else
@@ -518,10 +667,13 @@ public class Manager {
                             }
                             else if(domanimals.get(j).animalName.equals("buffalo")){
                                 domanimals.get(j).turnTime += domanimals.get(j).timeToProduce;
-                                if(domanimals.get(j).prodRemoveTime1 == 0)
-                                    domanimals.get(j).prodRemoveTime1 = turn + 4;
-                                else
-                                    domanimals.get(j).prodRemoveTime2 = turn + 4;
+                                Product product = new Product();
+                                product.name=2;
+                                product.xposission = domanimals.get(j).xposision;
+                                product.yposission = domanimals.get(j).yposision;
+                                product.existtime = 4;
+                                product.removetime=turn+4;
+                                products.add(product);
                                 if(homeProduct[domanimals.get(j).yposision][domanimals.get(j).xposision][0] == 0)
                                     homeProduct[domanimals.get(j).yposision][domanimals.get(j).xposision][0] = 31;
                                 else
@@ -565,55 +717,111 @@ public class Manager {
                     //--------------------------------------------------------------------------handling second products
                     if (turn>= millTime && millTime!=0){
                         mill.run();
-                        if (homeProduct[Math.abs(rand.nextInt()%6)][Math.abs(rand.nextInt()%6)][6]==0)
-                            homeProduct[Math.abs(rand.nextInt()%6)][Math.abs(rand.nextInt()%6)][6]=41;
+                        int t1=Math.abs(rand.nextInt()%6);
+                        int t2=Math.abs(rand.nextInt()%6);
+                        Product product = new Product();
+                        product.name =6;
+                        product.xposission=t2;
+                        product.yposission=t1;
+                        product.existtime=5;
+                        product.removetime=turn+product.existtime;
+                        products.add(product);
+
+
+                        if (homeProduct[t1][t2][6]==0)
+                            homeProduct[t1][t2][6]=41;
                         else
-                            homeProduct[Math.abs(rand.nextInt()%6)][Math.abs(rand.nextInt()%6)][6]++;
+                            homeProduct[t1][t2][6]++;
                         millTime=0;
 
                     }
                     if (turn>= prodfabricTime&& prodfabricTime!=0){
                         prodFabric.run();
-                        if (homeProduct[Math.abs(rand.nextInt()%6)][Math.abs(rand.nextInt()%6)][7]==0)
-                            homeProduct[Math.abs(rand.nextInt()%6)][Math.abs(rand.nextInt()%6)][7]=51;
+                        int t1=Math.abs(rand.nextInt()%6);
+                        int t2=Math.abs(rand.nextInt()%6);
+                        Product product = new Product();
+                        product.name =7;
+                        product.xposission=t2;
+                        product.yposission=t1;
+                        product.existtime=5;
+                        product.removetime=turn+product.existtime;
+                        products.add(product);
+                        if (homeProduct[t1][t2][7]==0)
+                            homeProduct[t1][t2][7]=51;
                         else
-                            homeProduct[Math.abs(rand.nextInt()%6)][Math.abs(rand.nextInt()%6)][7]++;
+                            homeProduct[t1][t2][7]++;
                         prodfabricTime=0;
 
                     }
                     if (turn>=packmilkTime  && packmilkTime!=0){
                         packMilk.run();
-                        if (homeProduct[Math.abs(rand.nextInt()%6)][Math.abs(rand.nextInt()%6)][8]==0)
-                            homeProduct[Math.abs(rand.nextInt()%6)][Math.abs(rand.nextInt()%6)][8]=61;
+                        int t1=Math.abs(rand.nextInt()%6);
+                        int t2=Math.abs(rand.nextInt()%6);
+                        Product product = new Product();
+                        product.name =8;
+                        product.xposission=t2;
+                        product.yposission=t1;
+                        product.existtime=5;
+                        product.removetime=turn+product.existtime;
+                        products.add(product);
+                        if (homeProduct[t1][t2][8]==0)
+                            homeProduct[t1][t2][8]=61;
                         else
-                            homeProduct[Math.abs(rand.nextInt()%6)][Math.abs(rand.nextInt()%6)][8]++;
+                            homeProduct[t1][t2][8]++;
                         packmilkTime=0;
 
                     }
                     if (turn>= bakeryTime && bakeryTime!=0){
                         bakery.run();
-                        if (homeProduct[Math.abs(rand.nextInt()%6)][Math.abs(rand.nextInt()%6)][9]==0)
-                            homeProduct[Math.abs(rand.nextInt()%6)][Math.abs(rand.nextInt()%6)][9]=71;
+                        int t1=Math.abs(rand.nextInt()%6);
+                        int t2=Math.abs(rand.nextInt()%6);
+                        Product product = new Product();
+                        product.name =9;
+                        product.xposission=t2;
+                        product.yposission=t1;
+                        product.existtime=6;
+                        product.removetime=turn+product.existtime;
+                        products.add(product);
+                        if (homeProduct[t1][t2][9]==0)
+                            homeProduct[t1][t2][9]=71;
                         else
-                            homeProduct[Math.abs(rand.nextInt()%6)][Math.abs(rand.nextInt()%6)][9]++;
+                            homeProduct[t1][t2][9]++;
                         bakeryTime=0;
 
                     }
                     if (turn>= tailoringTime && tailoringTime!=0){
                         tailoring.run();
-                        if (homeProduct[Math.abs(rand.nextInt()%6)][Math.abs(rand.nextInt()%6)][10]==0)
-                            homeProduct[Math.abs(rand.nextInt()%6)][Math.abs(rand.nextInt()%6)][10]=81;
+                        int t1=Math.abs(rand.nextInt()%6);
+                        int t2=Math.abs(rand.nextInt()%6);
+                        Product product = new Product();
+                        product.name =10;
+                        product.xposission=t2;
+                        product.yposission=t1;
+                        product.existtime=6;
+                        product.removetime=turn+product.existtime;
+                        products.add(product);
+                        if (homeProduct[t1][t2][10]==0)
+                            homeProduct[t1][t2][10]=81;
                         else
-                            homeProduct[Math.abs(rand.nextInt()%6)][Math.abs(rand.nextInt()%6)][10]++;
+                            homeProduct[t1][t2][10]++;
                         tailoringTime=0;
 
                     }
                     if (turn>= iceStoreTime && iceStoreTime!=0){
                         iceStore.run();
-                        if (homeProduct[Math.abs(rand.nextInt()%6)][Math.abs(rand.nextInt()%6)][11]==0)
-                            homeProduct[Math.abs(rand.nextInt()%6)][Math.abs(rand.nextInt()%6)][11]=91;
+                        int t1=Math.abs(rand.nextInt()%6);
+                        int t2=Math.abs(rand.nextInt()%6);
+                        Product product = new Product();
+                        product.name =11;
+                        product.xposission=t2;
+                        product.yposission=t1;
+                        product.existtime=6;
+                        product.removetime=turn+product.existtime;
+                        products.add(product);
+                        if (homeProduct[t1][t2][11]==0)
+                            homeProduct[t1][t2][11]=91;
                         else
-                            homeProduct[Math.abs(rand.nextInt()%6)][Math.abs(rand.nextInt()%6)][11]++;
+                            homeProduct[t1][t2][11]++;
                         iceStoreTime=0;
 
                     }
@@ -631,7 +839,7 @@ public class Manager {
                     //--------------------------------------------------------------- cage check
                     for (int j = 0; j < wildAnimals.size(); j++) {
                         if (wildAnimals.get(j).cages>=wildAnimals.get(j).maxCage){
-                            if (wildAnimals.get(j).animalname.equals("loin")){
+                            if (wildAnimals.get(j).animalname.equals("lion")){
                                 homeProduct[wildAnimals.get(j).yposision][wildAnimals.get(j).xposision][3]=4;
                                 lionRemoveTime[1] = wildAnimals.get(j).xposision;
                                 lionRemoveTime[2] = wildAnimals.get(j).yposision;
@@ -886,16 +1094,15 @@ public class Manager {
                         if(b[j] == true)
                             temp ++;
                     }
-                    if(temp == b.length){
+                    if(temp == task1.length/2){
                         level++;
                         System.out.println("CONGRATS you have finished this level  :)");
                         try {
                             File users = new File("users.txt");
                             File users1 = new File("users1.txt");
                             Scanner user = new Scanner(users);
-                            Scanner user1 = new Scanner((users1));
                             PrintWriter printWriter = new PrintWriter(users1);
-
+                            Scanner user1 = new Scanner((users1));
                             while (user.hasNextLine()){
                                 String line = user.nextLine();
                                 if (turn <= timeprize) {
@@ -953,15 +1160,18 @@ public class Manager {
 
 
 
+                if (Return==false){
+                    printinformation.turns(turn);
+                    printinformation.grass(grass);
+                    printinformation.domAnimal(domanimals);
+                    printinformation.wildAnimal(wildAnimals);
+                    printinformation.cat(cats);
+                    printinformation.dog(dogs);
+                    printinformation.homeProduct(homeProduct);
+                    printinformation.task(level,domanimals);
+                }
 
-                printinformation.turns(turn);
-                printinformation.grass(grass);
-                printinformation.domAnimal(domanimals);
-                printinformation.wildAnimal(wildAnimals);
-                printinformation.cat(cats);
-                printinformation.dog(dogs);
-                printinformation.homeProduct(homeProduct);
-                printinformation.task(level,domanimals);
+
                 if(Return == true)
                     break;
             }

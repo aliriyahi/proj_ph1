@@ -3,13 +3,14 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.lang.reflect.Field;
+import java.util.Date;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-
-        //Manager m = new Manager(1);
-        //m.run();
+        //--------------------- logger
+        Date date = new Date();
+        File log = new File("log.txt");
 
         Scanner sc = new Scanner(System.in);
         Scanner fileReader;
@@ -20,6 +21,7 @@ public class Main {
         File users = new File("users.txt");
         try {
             PrintWriter printWriter1 = new PrintWriter(new FileWriter(users, true));
+            PrintWriter logger = new PrintWriter(new FileWriter(log , true));
         }catch (Exception e){
             System.out.println(e);
         }
@@ -55,8 +57,19 @@ public class Main {
                                     temp = false;
                                     break;
                                 }
+                                else {
+                                    try {
+                                        PrintWriter logger  = new PrintWriter(new FileWriter(log , true));
+                                        logger.append("[ERROR] ,"+date.toLocaleString()+",WRONG USERNAME");
+                                        logger.println();
+                                        logger.close();
+                                    }catch (Exception e){
+                                        System.out.println(e);
+                                    }
+                                }
                             }
                             fileReader.close();
+
                         }
 
                         temp = true;
@@ -69,6 +82,16 @@ public class Main {
                                 if (fileReader.nextLine().split("\\s")[1].equals(password)) {
                                     temp = false;
                                     break;
+                                }
+                                else {
+                                    try {
+                                        PrintWriter logger  = new PrintWriter(new FileWriter(log , true));
+                                        logger.append("[ERROR] ,"+date.toLocaleString()+",WRONG PASSWORD");
+                                        logger.println();
+                                        logger.close();
+                                    }catch (Exception e){
+                                        System.out.println(e);
+                                    }
                                 }
                             }
                             fileReader.close();
@@ -90,7 +113,14 @@ public class Main {
                             fileReader.close();
                         }
 
-                        //Manager manager = new Manager(level);
+                            PrintWriter logger = new PrintWriter(new FileWriter(log , true));
+                            logger.append("Header");
+                            logger.println();
+                            logger.append("2. "+username);
+                            logger.println();
+                            logger.println("3. last modified "+date.toLocaleString());
+                            logger.close();
+
                         //-------------------------------------------------
                     } catch (Exception e) {
                         System.out.println(e);
@@ -127,8 +157,21 @@ public class Main {
                         printWriter.append(username + " " + password + " " + "1 0");
                         printWriter.println();
                         printWriter.close();
+                        try {
+                            PrintWriter logger = new PrintWriter(new FileWriter(log , true));
+                            logger.append("Header");
+                            logger.println();
+                            logger.append("1. "+ date.toLocaleString());
+                            logger.println();
+                            logger.append("2. "+username);
+                            logger.println();
+                            logger.println("3. "+date.toLocaleString());
+                            logger.close();
 
-                        //Manager manager = new Manager(level);
+                        }catch (Exception e){
+                            System.out.println(e);
+                        }
+
 
                     } catch (Exception e) {
                         System.out.println(e);
@@ -150,51 +193,99 @@ public class Main {
 
             menu = sc.nextLine();
             menu = sc.nextLine();
-            if (menu.toUpperCase().contains("START")) {
-                prizeCheck++;
-                startLevel = Integer.parseInt(menu.split("\\s")[1]);
-                if (startLevel <= level) {
 
-                    Manager manager = new Manager(startLevel);
-                    manager.username = username;
-                    manager.password = password;
-                    manager.previousCoin = previousCoin;
-                    System.out.println("RUNNING the ADVENTURES ...");
-                    manager.filereader();
-                    manager.run();
-                    if(manager.maxLevel > level) {
-                        level++;
-                        Return = false;
-                    }else
-                        System.out.println("EXCELLENT you have reached the MAX");
+                if (menu.toUpperCase().contains("START") ) {
+                    prizeCheck++;
 
-                } else {
-                    System.out.println("You did not reach this level ... \nEnter level again :");
-                    startLevel = sc.nextInt();
-                    if (startLevel <= level) {
-                        Manager manager = new Manager(startLevel);
-                        manager.username = username;
-                        manager.password = password;
-                        manager.previousCoin = previousCoin;
-                        System.out.println("RUNNING the ADVENTURES ...");
-                        manager.filereader();
-                        manager.run();
-                        if(manager.maxLevel > level) {
-                            level++;
-                            Return = false;
-                        }else
-                            System.out.println("EXCELLENT you have reached the MAX");
+                    if (menu.split("\\s").length==2){
+                         startLevel = Integer.parseInt(menu.split("\\s")[1]);
+                        if (startLevel <= level) {
+                            try {
+                                PrintWriter logger  = new PrintWriter(new FileWriter(log , true));
+                                logger.append("[INFO] ,"+date.toLocaleString()+",ENTERED THE GAME");
+                                logger.println();
+                                logger.close();
+                            }catch (Exception e){
+                                System.out.println(e);
+                            }
+                            Manager manager = new Manager(startLevel);
+                            manager.username = username;
+                            manager.password = password;
+                            manager.previousCoin = previousCoin;
+                            System.out.println("RUNNING the ADVENTURES ...");
+                            manager.filereader();
+                            manager.run();
+
+                            if(manager.maxLevel > level) {
+                                level++;
+                                Return = false;
+                            }else
+                                System.out.println("EXCELLENT you have reached the MAX");
+
+                        } else {
+                            System.out.println("You did not reach this level ... \nEnter level again :");
+                            startLevel = sc.nextInt();
+                            if (startLevel <= level) {
+                                try {
+                                    PrintWriter logger  = new PrintWriter(new FileWriter(log , true));
+                                    logger.append("[INFO] ,"+date.toLocaleString()+",ENTERED THE GAME");
+                                    logger.println();
+                                    logger.close();
+                                }catch (Exception e){
+                                    System.out.println(e);
+                                }
+                                Manager manager = new Manager(startLevel);
+                                manager.username = username;
+                                manager.password = password;
+                                manager.previousCoin = previousCoin;
+                                System.out.println("RUNNING the ADVENTURES ...");
+                                manager.filereader();
+                                manager.run();
+                                if(manager.maxLevel > level) {
+                                    level++;
+                                    Return = false;
+                                }else
+                                    System.out.println("EXCELLENT you have reached the MAX");
+                            }
+                        }
+                    }else{
+                        System.out.println("wrong input!");
                     }
+
                 }
-            } else if (menu.toUpperCase().contains("LOG OUT")) {
+             else if (menu.toUpperCase().contains("LOG OUT")) {
+                    try {
+                        PrintWriter logger  = new PrintWriter(new FileWriter(log , true));
+                        logger.append("[INFO] ,"+date.toLocaleString()+",LOGED OUT THE GAME");
+                        logger.println();
+                        logger.close();
+                    }catch (Exception e){
+                        System.out.println(e);
+                    }
                 continue;
 
             } else if (menu.toUpperCase().contains("SETTING")) {
 
             } else if (menu.toUpperCase().contains("EXIT")) {
+                    try {
+                        PrintWriter logger  = new PrintWriter(new FileWriter(log , true));
+                        logger.append("[INFO] ,"+date.toLocaleString()+",EXITED THE GAME");
+                        logger.println();
+                        logger.close();
+                    }catch (Exception e){
+                        System.out.println(e);
+                    }
                 System.exit(0);
             } else {
                 System.out.println("Wrong Input");
+                    try {
+                        PrintWriter logger  = new PrintWriter(new FileWriter(log , true));
+                        logger.append("[ERROR] ,"+date.toLocaleString()+",WRONG INPUT");
+                        logger.println();
+                        logger.close();
+                    }catch (Exception e){
+                        System.out.println(e);
+                    }
                 continue;
             }
         }

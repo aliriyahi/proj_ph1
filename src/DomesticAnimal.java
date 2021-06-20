@@ -8,8 +8,6 @@ public class DomesticAnimal {
         public int animalHealth=100;
         public int timeToProduce;
         public int turnTime;
-        public int prodRemoveTime1 = 0;
-        public int prodRemoveTime2 = 0;
         public String product;
         public int speed=1;
         public int xposision = Math.abs(rand.nextInt()%6);

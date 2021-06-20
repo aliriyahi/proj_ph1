@@ -3,19 +3,19 @@ levelsnumber
 level 1
 coin 500
 tasks 2 egg 2 chicken 500 coin
-animals loin 20
-time 50
+animals lion 20
+time 40
 price 150
 level 2
 coin 700
 tasks 2 chicken 1 turkey 2 flour 400 coin
-animals loin 20 bear 40
+animals lion 20 bear 40
 time 100
 price 200
 level 3
 coin 1200
 tasks 2 chicken 2 turkey 2 buffalo 2 fabric 2 bread 2 packmilk
-animals tiger 20 bear 40 loin 60
+animals tiger 20 bear 40 lion 60
 time 150
 price 250
 level 4
