@@ -27,7 +27,6 @@ public class WildAnimal {
             }else {
                 move *= -1;
                 this.xposision += move;
-                //System.out.println(move);
             }
 
         }
@@ -39,7 +38,6 @@ public class WildAnimal {
             }else {
                 move *= -1;
                 this.yposision += move;
-                //System.out.println(move);
             }
 
         }
