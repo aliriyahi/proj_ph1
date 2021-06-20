@@ -5,13 +5,16 @@ import java.io.PrintWriter;
 import java.util.*;
 
 public class Manager {
+
+    Random rand = new Random();
     int turn = 0;
     int level = 0;
     int startCoin;
     String tasks;
     String wildanimals;
     int timeprize;
-    int prize;
+    static int prize;
+    int maxLevel;
     String[] wildTn ;
     String username , password;
     int previousCoin;
@@ -46,6 +49,7 @@ public class Manager {
         int millTime=0,bakeryTime=0,iceStoreTime=0,tailoringTime=0,packmilkTime=0,prodfabricTime=0;
         int truckTime = 0;
         int chickenTime=0,turkeyTime=0,buffaloTime=0;
+        int[] lionRemoveTime=new int[3],bearRemoveTime=new  int[3],tigerRemoveTime=new int[3];
         boolean Return = false;
 
         Scanner sc = new Scanner(System.in);
@@ -124,6 +128,8 @@ public class Manager {
                         System.out.println("you dont have enough coin!");
 
                 }
+                else
+                    System.out.println("wrong input!");
 
             }
             //-------------------------------------------------------------------------
@@ -465,6 +471,24 @@ public class Manager {
                     for (int j = 0; j < dogs.size(); j++) {
                         dogs.get(j).animalmove();
                     }
+                    //------------------------------------------------------- prod remove time
+//                    for (int j = 0; j < domanimals.size(); j++) {
+//                        if(domanimals.get(j).prodRemoveTime1 <= turn){
+//                            domanimals.get(j).prodRemoveTime1 = 0;
+//                            if(domanimals.get(j).animalName.equals("chicken")) {
+//
+//                            }
+//                            else if(domanimals.get(j).animalName.equals("turkey")){
+//
+//                            }
+//
+//                        }
+//                        if(domanimals.get(j).prodRemoveTime2 <= turn){
+//                            domanimals.get(j).prodRemoveTime2 = 0;
+//
+//                        }
+//
+//                    }
 
                     //-------------------------------------------------------- handling products
 
@@ -472,18 +496,32 @@ public class Manager {
                         if(turn >= domanimals.get(j).turnTime){
                             if(domanimals.get(j).animalName.equals("chicken")){
                                 domanimals.get(j).turnTime += domanimals.get(j).timeToProduce;
+                                if(domanimals.get(j).prodRemoveTime1 == 0)
+                                    domanimals.get(j).prodRemoveTime1 = turn + 4;
+                                else
+                                    domanimals.get(j).prodRemoveTime2 = turn + 4;
                                 if(homeProduct[domanimals.get(j).yposision][domanimals.get(j).xposision][0] == 0)
                                     homeProduct[domanimals.get(j).yposision][domanimals.get(j).xposision][0] = 11;
                                 else
                                     homeProduct[domanimals.get(j).yposision][domanimals.get(j).xposision][0] += 1;
-                            }else if(domanimals.get(j).animalName.equals("turkey")){
+                            }
+                            else if(domanimals.get(j).animalName.equals("turkey")){
                                 domanimals.get(j).turnTime += domanimals.get(j).timeToProduce;
+                                if(domanimals.get(j).prodRemoveTime1 == 0)
+                                    domanimals.get(j).prodRemoveTime1 = turn + 4;
+                                else
+                                    domanimals.get(j).prodRemoveTime2 = turn + 4;
                                 if(homeProduct[domanimals.get(j).yposision][domanimals.get(j).xposision][0] == 0)
                                     homeProduct[domanimals.get(j).yposision][domanimals.get(j).xposision][0] = 21;
                                 else
                                     homeProduct[domanimals.get(j).yposision][domanimals.get(j).xposision][0] += 1;
-                            }else if(domanimals.get(j).animalName.equals("buffalo")){
+                            }
+                            else if(domanimals.get(j).animalName.equals("buffalo")){
                                 domanimals.get(j).turnTime += domanimals.get(j).timeToProduce;
+                                if(domanimals.get(j).prodRemoveTime1 == 0)
+                                    domanimals.get(j).prodRemoveTime1 = turn + 4;
+                                else
+                                    domanimals.get(j).prodRemoveTime2 = turn + 4;
                                 if(homeProduct[domanimals.get(j).yposision][domanimals.get(j).xposision][0] == 0)
                                     homeProduct[domanimals.get(j).yposision][domanimals.get(j).xposision][0] = 31;
                                 else
@@ -496,80 +534,86 @@ public class Manager {
                         if(wildTn[j].toLowerCase().equals("lion")){
                             if(turn >= Integer.parseInt(wildTn[j+1])) {
                                 WildAnimal wildAnimal = new WildAnimal();
+                                wildAnimal.animalname = "lion";
                                 wildAnimal.speed = 1;
                                 wildAnimal.maxCage = 3;
                                 wildAnimals.add(wildAnimal);
+                                wildTn[j] = "a";
                             }
                         }
                         else if(wildTn[j].toLowerCase().equals("bear")){
                             if(turn >= Integer.parseInt(wildTn[j+1])) {
                                 WildAnimal wildAnimal = new WildAnimal();
+                                wildAnimal.animalname = "bear";
                                 wildAnimal.speed = 1;
                                 wildAnimal.maxCage = 4;
                                 wildAnimals.add(wildAnimal);
+                                wildTn[j] = "a";
                             }
                         }
                         else if(wildTn[j].toLowerCase().equals("tiger")){
                             if(turn >= Integer.parseInt(wildTn[j+1])) {
                                 WildAnimal wildAnimal = new WildAnimal();
+                                wildAnimal.animalname = "tiger";
                                 wildAnimal.speed = 2;
                                 wildAnimal.maxCage = 4;
                                 wildAnimals.add(wildAnimal);
+                                wildTn[j] = "a";
                             }
                         }
                     }
                     //--------------------------------------------------------------------------handling second products
                     if (turn>= millTime && millTime!=0){
                         mill.run();
-                        if (homeProduct[(int)Math.random()%6][(int)Math.random()%6][6]==0)
-                            homeProduct[(int)Math.random()%6][(int)Math.random()%6][6]=41;
+                        if (homeProduct[Math.abs(rand.nextInt()%6)][Math.abs(rand.nextInt()%6)][6]==0)
+                            homeProduct[Math.abs(rand.nextInt()%6)][Math.abs(rand.nextInt()%6)][6]=41;
                         else
-                            homeProduct[(int)Math.random()%6][(int)Math.random()%6][6]++;
+                            homeProduct[Math.abs(rand.nextInt()%6)][Math.abs(rand.nextInt()%6)][6]++;
                         millTime=0;
 
                     }
                     if (turn>= prodfabricTime&& prodfabricTime!=0){
                         prodFabric.run();
-                        if (homeProduct[(int)Math.random()%6][(int)Math.random()%6][7]==0)
-                            homeProduct[(int)Math.random()%6][(int)Math.random()%6][7]=51;
+                        if (homeProduct[Math.abs(rand.nextInt()%6)][Math.abs(rand.nextInt()%6)][7]==0)
+                            homeProduct[Math.abs(rand.nextInt()%6)][Math.abs(rand.nextInt()%6)][7]=51;
                         else
-                            homeProduct[(int)Math.random()%6][(int)Math.random()%6][7]++;
+                            homeProduct[Math.abs(rand.nextInt()%6)][Math.abs(rand.nextInt()%6)][7]++;
                         prodfabricTime=0;
 
                     }
                     if (turn>=packmilkTime  && packmilkTime!=0){
                         packMilk.run();
-                        if (homeProduct[(int)Math.random()%6][(int)Math.random()%6][8]==0)
-                            homeProduct[(int)Math.random()%6][(int)Math.random()%6][8]=61;
+                        if (homeProduct[Math.abs(rand.nextInt()%6)][Math.abs(rand.nextInt()%6)][8]==0)
+                            homeProduct[Math.abs(rand.nextInt()%6)][Math.abs(rand.nextInt()%6)][8]=61;
                         else
-                            homeProduct[(int)Math.random()%6][(int)Math.random()%6][8]++;
+                            homeProduct[Math.abs(rand.nextInt()%6)][Math.abs(rand.nextInt()%6)][8]++;
                         packmilkTime=0;
 
                     }
                     if (turn>= bakeryTime && bakeryTime!=0){
                         bakery.run();
-                        if (homeProduct[(int)Math.random()%6][(int)Math.random()%6][9]==0)
-                            homeProduct[(int)Math.random()%6][(int)Math.random()%6][9]=71;
+                        if (homeProduct[Math.abs(rand.nextInt()%6)][Math.abs(rand.nextInt()%6)][9]==0)
+                            homeProduct[Math.abs(rand.nextInt()%6)][Math.abs(rand.nextInt()%6)][9]=71;
                         else
-                            homeProduct[(int)Math.random()%6][(int)Math.random()%6][9]++;
+                            homeProduct[Math.abs(rand.nextInt()%6)][Math.abs(rand.nextInt()%6)][9]++;
                         bakeryTime=0;
 
                     }
                     if (turn>= tailoringTime && tailoringTime!=0){
                         tailoring.run();
-                        if (homeProduct[(int)Math.random()%6][(int)Math.random()%6][10]==0)
-                            homeProduct[(int)Math.random()%6][(int)Math.random()%6][10]=81;
+                        if (homeProduct[Math.abs(rand.nextInt()%6)][Math.abs(rand.nextInt()%6)][10]==0)
+                            homeProduct[Math.abs(rand.nextInt()%6)][Math.abs(rand.nextInt()%6)][10]=81;
                         else
-                            homeProduct[(int)Math.random()%6][(int)Math.random()%6][10]++;
+                            homeProduct[Math.abs(rand.nextInt()%6)][Math.abs(rand.nextInt()%6)][10]++;
                         tailoringTime=0;
 
                     }
                     if (turn>= iceStoreTime && iceStoreTime!=0){
                         iceStore.run();
-                        if (homeProduct[(int)Math.random()%6][(int)Math.random()%6][11]==0)
-                            homeProduct[(int)Math.random()%6][(int)Math.random()%6][11]=91;
+                        if (homeProduct[Math.abs(rand.nextInt()%6)][Math.abs(rand.nextInt()%6)][11]==0)
+                            homeProduct[Math.abs(rand.nextInt()%6)][Math.abs(rand.nextInt()%6)][11]=91;
                         else
-                            homeProduct[(int)Math.random()%6][(int)Math.random()%6][11]++;
+                            homeProduct[Math.abs(rand.nextInt()%6)][Math.abs(rand.nextInt()%6)][11]++;
                         iceStoreTime=0;
 
                     }
@@ -589,15 +633,38 @@ public class Manager {
                         if (wildAnimals.get(j).cages>=wildAnimals.get(j).maxCage){
                             if (wildAnimals.get(j).animalname.equals("loin")){
                                 homeProduct[wildAnimals.get(j).yposision][wildAnimals.get(j).xposision][3]=4;
+                                lionRemoveTime[1] = wildAnimals.get(j).xposision;
+                                lionRemoveTime[2] = wildAnimals.get(j).yposision;
+
+                                wildAnimals.remove(j);
+                                lionRemoveTime[0] = turn +5;
                             }
                             else if (wildAnimals.get(j).animalname.equals("bear")){
                                 homeProduct[wildAnimals.get(j).yposision][wildAnimals.get(j).xposision][4]=5;
+                                bearRemoveTime[1] = wildAnimals.get(j).xposision;
+                                bearRemoveTime[2] = wildAnimals.get(j).yposision;
+                                wildAnimals.remove(j);
+                                bearRemoveTime[0] = turn +5;
                             }
                             else if (wildAnimals.get(j).animalname.equals("tiger")){
                                 homeProduct[wildAnimals.get(j).yposision][wildAnimals.get(j).xposision][5]=6;
+                                tigerRemoveTime[1] = wildAnimals.get(j).xposision;
+                                tigerRemoveTime[2] = wildAnimals.get(j).yposision;
+                                wildAnimals.remove(j);
+                                tigerRemoveTime[0] = turn +5;
                             }
 
                         }
+                    }
+                    //------------------------------------------------------------------
+                    if(lionRemoveTime[0] < turn){
+                        homeProduct[lionRemoveTime[2]][lionRemoveTime[1]][3]=0;
+                    }
+                    if(bearRemoveTime[0] < turn){
+                        homeProduct[bearRemoveTime[2]][bearRemoveTime[1]][4]=0;
+                    }
+                    if(tigerRemoveTime[0] < turn){
+                        homeProduct[tigerRemoveTime[2]][tigerRemoveTime[1]][5]=0;
                     }
                     //-----------------------------------------------handling truck
                     if (turn>=truckTime && truckTime!=0){
@@ -607,6 +674,9 @@ public class Manager {
                     //---------------------------------------------------- health reduce
                     for (int j = 0; j < domanimals.size(); j++) {
                         domanimals.get(j).animalHealth-=10;
+                        if(domanimals.get(j).animalHealth == 0){
+                            domanimals.remove(j);
+                        }
                     }
                     //---------------------------------------------------------------- animal move(food need)
                     for (int j = 0; j < domanimals.size(); j++) {
@@ -839,6 +909,7 @@ public class Manager {
 
                                 }
                                 else{
+                                    prize = 0;
                                     if(line.startsWith(username)) {
                                         printWriter.append(username + " " + password + " " + level +" 0");
                                         printWriter.println();
@@ -899,15 +970,7 @@ public class Manager {
 
         }
 
-//        //DomesticAnimal[] domesticAnimal = new DomesticAnimal[30];
-//        //domesticAnimal = new DomesticAnimal[1];
-//        domesticAnimal[0] = new DomesticAnimal();
-//        domesticAnimal[1] = new DomesticAnimal();
-//        domesticAnimal[0].animalHealth = 2;
-//        //domesticAnimal = new DomesticAnimal[1];
-//        domesticAnimal[0].animalName = "d";
-//        domesticAnimal[1].animalName = "k";
-//        System.out.println(domesticAnimal[0].animalName);
+
 
     }
 
@@ -919,6 +982,9 @@ public class Manager {
             Scanner s = new Scanner(missions);
             while (s.hasNextLine()){
                 String temp = s.nextLine();
+                if(temp.contains("levelsnumber")){
+                    maxLevel = Integer.parseInt(s.nextLine());
+                }
                 if (temp.contains("level "+this.level)){
                     this.startCoin=Integer.parseInt(s.nextLine().split("\\s")[1]);
                     Storage.coin = startCoin + previousCoin;
@@ -931,7 +997,9 @@ public class Manager {
                     break;
 
                 }
+
             }
+            s.close();
 
 
         }catch (Exception e){

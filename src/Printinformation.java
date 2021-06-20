@@ -9,6 +9,7 @@ public class Printinformation {
 
 
     public void turns(int turns){
+        System.out.println("/--------------------------------------------------/");
         System.out.println("CURRENT TIME = "+ turns);
     }
     public void grass(int[][] grass){
@@ -52,27 +53,33 @@ public class Printinformation {
             for (int j = 0; j < 6; j++) {
                 for (int k = 0; k < 12; k++) {
                     if(homeProduct[i][j][k] != 0){
-                        temp = homeProduct[i][j][k]/10;
+                        temp = homeProduct[i][j][k];
                         int temp1=i+1;
                         int temp2=j+1;
-                        if(temp == 1)
+                        if(temp/10 == 1)
                             System.out.println("Egg ["+temp2+" "+temp1+"]");
-                        else if(temp == 2)
+                        else if(temp/10 == 2)
                             System.out.println("Feather ["+temp2+" "+temp1+"]");
-                        else if(temp == 3)
+                        else if(temp/10 == 3)
                             System.out.println("Milk ["+temp2+" "+temp1+"]");
-                        else if(temp == 4)
+                        else if(temp/10 == 4)
                             System.out.println("Flour ["+temp2+" "+temp1+"]");
-                        else if(temp == 5)
+                        else if(temp/10 == 5)
                             System.out.println("Fabric ["+temp2+" "+temp1+"]");
-                        else if(temp == 6)
+                        else if(temp/10 == 6)
                             System.out.println("PackMilk ["+temp2+" "+temp1+"]");
-                        else if(temp == 7)
+                        else if(temp/10 == 7)
                             System.out.println("Bread ["+temp2+" "+temp1+"]");
-                        else if(temp == 8)
+                        else if(temp/10 == 8)
                             System.out.println("Cloths ["+temp2+" "+temp1+"]");
-                        else if(temp == 9)
+                        else if(temp/10 == 9)
                             System.out.println("Icecream ["+temp2+" "+temp1+"]");
+                        else if(temp == 4)
+                            System.out.println("Lion ["+temp2+" "+temp1+"]");
+                        else if(temp == 5)
+                            System.out.println("Bear ["+temp2+" "+temp1+"]");
+                        else if(temp == 6)
+                            System.out.println("Tiger ["+temp2+" "+temp1+"]");
                     }
 
                 }

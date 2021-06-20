@@ -16,6 +16,7 @@ public class Main {
         String username = null , password = null , menu = null ,logSign1;
         int logSign = 0 , level = 1;
         int startLevel , previousCoin = 0;
+        int prizeCheck = 0;
         File users = new File("users.txt");
         try {
             PrintWriter printWriter1 = new PrintWriter(new FileWriter(users, true));
@@ -50,7 +51,7 @@ public class Main {
                             System.out.println("Enter USERNAME :");
                             username = sc.next();
                             while (fileReader.hasNextLine()) {
-                                if (fileReader.nextLine().contains(username)) {
+                                if (fileReader.nextLine().split("\\s")[0].equals(username)) {
                                     temp = false;
                                     break;
                                 }
@@ -110,7 +111,7 @@ public class Main {
                             temp = false;
                             username = sc.next();
                             while (fileReader.hasNextLine()) {
-                                if (fileReader.nextLine().contains(username)) {
+                                if (fileReader.nextLine().split("\\s")[0].equals(username)) {
                                     System.out.println("This USERNAME is already taken");
                                     temp = true;
                                     break;
@@ -141,11 +142,16 @@ public class Main {
 
 
             //----------------------------------------------------------------------------
+            if(prizeCheck != 0)
+                previousCoin = Manager.prize;
+
             System.out.println("Menu :\nSTART [level]\nLOG OUT\nSETTINGS");
+
 
             menu = sc.nextLine();
             menu = sc.nextLine();
             if (menu.toUpperCase().contains("START")) {
+                prizeCheck++;
                 startLevel = Integer.parseInt(menu.split("\\s")[1]);
                 if (startLevel <= level) {
 
@@ -156,8 +162,11 @@ public class Main {
                     System.out.println("RUNNING the ADVENTURES ...");
                     manager.filereader();
                     manager.run();
-                    level++;
-                    Return = false;
+                    if(manager.maxLevel > level) {
+                        level++;
+                        Return = false;
+                    }else
+                        System.out.println("EXCELLENT you have reached the MAX");
 
                 } else {
                     System.out.println("You did not reach this level ... \nEnter level again :");
@@ -170,8 +179,11 @@ public class Main {
                         System.out.println("RUNNING the ADVENTURES ...");
                         manager.filereader();
                         manager.run();
-                        level++;
-                        Return = false;
+                        if(manager.maxLevel > level) {
+                            level++;
+                            Return = false;
+                        }else
+                            System.out.println("EXCELLENT you have reached the MAX");
                     }
                 }
             } else if (menu.toUpperCase().contains("LOG OUT")) {
