@@ -532,11 +532,16 @@ public class Manager {
                             System.out.println("YOU DO NOT HAVE ENOUGH COIN!");
 
                     }
-                    else
+                    else {
                         System.out.println("wrong input!");
+                        logger("ERROR" , "WRONG INPUT");
+                    }
+                    logger("INFO" , "WORKSHOP BUILD SUCCESSFULLY");
                 }
-                else
+                else {
                     System.out.println("wrong input!");
+                    logger("ERROR" , "WRONG INPUT");
+                }
 
 
             }
@@ -549,51 +554,85 @@ public class Manager {
                     if(wildAnimals.get(i).xposision == x && wildAnimals.get(i).yposision == y){
                         temp = false;
                         wildAnimals.get(i).cages +=1;
+                        logger("INFO" , "WILD ANIMAL CAGED");
                         break;
                     }
                 }
-                if(temp == true)
+                if(temp == true) {
                     System.out.println("There is no wild animal there!");
+                    logger("ERROR" , "CAGE ERROR");
+                }
 
             }
             //--------------------------------------------------------------------------------
             else if (command.toUpperCase().startsWith("TRUCK LOAD")){
 
-                String name = command.toLowerCase().split("\\s")[2];
-                if (truckTime==0){
-                    boolean temp = car.load(name , 1);
-                    if(temp == false)
-                        System.out.println("Car does not have space!");
+                if(command.split("\\s").length == 3) {
+                    String name = command.toLowerCase().split("\\s")[2];
+                    if (truckTime == 0) {
+                        boolean temp = car.load(name, 1);
+                        if(temp == true)
+                            logger("INFO", "TRUCK LOADED SUCCESSFULLY");
+                        if (temp == false) {
+                            System.out.println("TRUCK LOAD ERROR!");
+                            logger("ERROR", "TRUCK LOAD ERROR");
+                        }
+                    }
+                }
+                else {
+                    System.out.println("wrong input!");
+                    logger("ERROR", "WRONG INPUT");
                 }
 
 
             }
             //--------------------------------------------------------------------------------
             else if (command.toUpperCase().startsWith("TRUCK UNLOAD")){
-                String name = command.toLowerCase().split("\\s")[2];
-                if (truckTime==0){
-                    boolean temp = car.unload(name , 1);
-                    if(temp == false)
-                        System.out.println("Car does not have such staff!");
+                if(command.split("\\s").length == 3) {
+                    String name = command.toLowerCase().split("\\s")[2];
+                    if (truckTime == 0) {
+                        boolean temp = car.unload(name, 1);
+                        if(temp == true)
+                            logger("INFO", "TRUCK UNLOADED SUCCESSFULLY");
+                        if (temp == false){
+                            System.out.println("TRUCK UNLOAD ERROR!");
+                            logger("ERROR", "TRUCK UNLOAD ERROR");
+                        }
+                    }
+                }
+                else {
+                    System.out.println("wrong input!");
+                    logger("ERROR", "WRONG INPUT");
                 }
 
 
             }
             //--------------------------------------------------------------------------------
             else if (command.toUpperCase().startsWith("TRUCK GO")){
-                if (car.useSpace==0)
-                    System.out.println("You should load the truck first!");
+                if(command.split("\\s").length == 2) {
+                    if (car.useSpace == 0) {
+                        System.out.println("You should load the truck first!");
+                        logger("ERROR", "TRUCK GO ERROR");
+                    } else {
+                        if (truckTime == 0) {
+                            truckTime = turn + car.time;
+                            logger("INFO", "TRUCK WENT SUCCESSFULLY");
+                        }
+                        else {
+                            System.out.println("Car is on the road...");
+                            logger("ERROR", "TRUCK GO ERROR");
+                        }
+                    }
+                }
                 else {
-                    if(truckTime == 0 )
-                        truckTime = turn + car.time;
-                    else
-                        System.out.println("Car is on the road...");
+                    System.out.println("wrong input!");
+                    logger("ERROR", "WRONG INPUT");
                 }
 
 
             }
             //--------------------------------------------------------------------------------
-            else if (command.toLowerCase().startsWith("inquiry")){
+            else if (command.toLowerCase().equals("inquiry")){
                 printinformation.turns(turn);
                 printinformation.grass(grass);
                 printinformation.domAnimal(domanimals);
@@ -607,7 +646,9 @@ public class Manager {
             }
             //--------------------------------------------------------------------------------
             else if (command.toUpperCase().startsWith("TURN")){
+
                 int n = Integer.parseInt(command.split("\\s")[1]);
+
 
                 for (int i = 0; i < n; i++) {
                     turn ++;
@@ -834,8 +875,10 @@ public class Manager {
                         }
 
                     }
-                    if (grasscheck==0)
+                    if (grasscheck==0) {
                         System.out.println("there is no grass !");
+                        logger("ALARM", "THERE IS NO GRASS");
+                    }
                     //--------------------------------------------------------------- cage check
                     for (int j = 0; j < wildAnimals.size(); j++) {
                         if (wildAnimals.get(j).cages>=wildAnimals.get(j).maxCage){
@@ -1096,6 +1139,7 @@ public class Manager {
                     }
                     if(temp == task1.length/2){
                         level++;
+                        logger("INFO", "FINISHED THE LEVEL");
                         System.out.println("CONGRATS you have finished this level  :)");
                         try {
                             File users = new File("users.txt");
@@ -1140,13 +1184,17 @@ public class Manager {
                         }
                         catch (Exception e){
                             System.out.println(e);
+                            logger("ERROR", "OPEN FILE(users , users1)");
                         }
                         System.out.println("1 : MENU  ,  2 : EXIT");
                         int m = sc.nextInt();
-                        if(m == 2)
+                        if(m == 2) {
+                            logger("INFO", "EXIT THE GAME");
                             System.exit(0);
+                        }
                         else if(m == 1){
                             Return = true;
+                            logger("INFO", "RETURNED TO MENU");
                         }
                     }
 
@@ -1156,6 +1204,7 @@ public class Manager {
 
                     //----------------------------------------------------------------------------------------
                 }
+                logger("INFO", "TURNED SUCCESSFULLY");
 
 
 
@@ -1175,8 +1224,10 @@ public class Manager {
                 if(Return == true)
                     break;
             }
-            else
+            else {
                 System.out.println("wrong input ...");
+                logger("ERROR", "WRONG INPUT");
+            }
 
         }
 
@@ -1214,8 +1265,21 @@ public class Manager {
 
         }catch (Exception e){
             System.out.println(e);
+            logger("ERROR", "OPEN FILE(missions) ERROR");
         }
 
+    }
+
+
+    public void logger(String type, String message ){
+        try {
+            PrintWriter logger  = new PrintWriter(new FileWriter(log , true));
+            logger.append("["+type+"] ,"+date.toLocaleString()+" ,"+message);
+            logger.println();
+            logger.close();
+        }catch (Exception e){
+            System.out.println(e);
+        }
     }
 
 }
